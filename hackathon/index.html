@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>University of Kerbala</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <style>
+    .background-logo {
+      background-image: url('Images/Uni-Logo.jpg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="bg-white">
+  <!-- Header -->
+  <header class="bg-gray-800 text-white">
+    <div class="container mx-auto flex justify-between items-center py-2 px-4">
+      <div class="flex items-center space-x-4">
+        <a href="login.html">
+            <i class="fas fa-home text-xl"></i>
+        </a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <i class="fas fa-envelope text-xl"></i>
+        <i class="fas fa-search text-xl"></i>
+        <a href="login.html">
+            <i class="fas fa-user text-xl"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Logo and Title -->
+  <div class="container mx-auto text-center">
+    <div class="relative background-logo h-48"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="bg-gray-900 text-white">
+    <div class="container mx-auto">
+      <ul class="flex justify-center space-x-4 py-2">
+        <li><a class="hover:text-red-500" href="#">HOME</a></li>
+        <li><a class="hover:text-red-500" href="#">ABOUT</a></li>
+        <li><a class="hover:text-red-500" href="#">ADMINISTRATION</a></li>
+        <li><a class="hover:text-red-500" href="#">FACULTIES</a></li>
+        <li><a class="hover:text-red-500" href="#">SCIENTIFIC JOURNALS</a></li>
+        <li><a class="hover:text-red-500" href="#">E-LEARNING</a></li>
+        <li><a class="hover:text-red-500" href="#">REPOSITORY</a></li>
+        <li><a class="hover:text-red-500" href="#">STAFF</a></li>
+        <li><a class="hover:text-red-500 bg-red-700 px-2 py-1" href="#">Projects</a></li>
+        <li><a class="hover:text-red-500" href="#">SCHOLARSHIPS</a></li>
+        <li><a class="hover:text-red-500" href="#">HEALTH SERVICES</a></li>
+        <li><a class="hover:text-red-500" href="#">VR TOUR</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mx-auto py-8">
+    <h2 class="text-2xl font-bold mb-4">Projects Archive</h2>
+    <div class="flex items-center space-x-2 mb-4">
+      <button class="bg-gray-200 px-4 py-2">Column visibility</button>
+      <button class="bg-gray-200 px-4 py-2">Copy</button>
+      <button class="bg-gray-200 px-4 py-2">CSV</button>
+      <button class="bg-gray-200 px-4 py-2">Excel</button>
+      <button class="bg-gray-200 px-4 py-2">PDF</button>
+      <button class="bg-gray-200 px-4 py-2">Print</button>
+    </div>
+    <div class="flex items-center mb-4">
+      <label class="mr-2" for="entries">Show</label>
+      <select class="border border-gray-300 px-2 py-1" id="entries">
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+      <span class="ml-2">entries</span>
+
+    </div>
+    <!-- <div>
+        <a href="Project.html" class="px-4 py-2 bg-gray-300 text-gray-800 rounded flex items-center hover:bg-gray-400 mb-4 ">
+          <i class="fas fa-plus mr-2"></i> Add Project
+        </a>
+    </div>      -->
+    <div class="flex justify-between items-center mb-4">
+      <span>List of upcoming activities at the university</span>
+      <input class="border border-gray-300 px-2 py-1" placeholder="Search:" type="text" />
+    </div>
+    <!-- Table Placeholder -->
+    <div class="border border-gray-300 p-4">
+      <div class="projects"></div>
+    </div>
+  </main>
+
+  <script>
+    // JavaScript to capture and use selected value
+    const entriesDropdown = document.getElementById('entries');
+    entriesDropdown.addEventListener('change', () => {
+      const selectedValue = entriesDropdown.value;
+      console.log(`Selected entries: ${selectedValue}`);
+      // Use selectedValue as needed
+    });
+  </script>
+  <script src="server/view.js"></script>
+</body>
+</html>
