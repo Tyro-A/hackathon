@@ -59,6 +59,24 @@
       <label for="registerEmail" class="block text-sm font-medium">Email:</label>
       <input type="email" id="registerEmail" name="registerEmail" class="block w-full px-4 py-2 mb-4 border" required>
       
+      <label for="registerPhone" class="block text-sm font-medium">Phone Number:</label>
+      <input type="tel" id="registerPhone" name="registerPhone" class="block w-full px-4 py-2 mb-4 border" required>
+      
+      <label for="registerCollege" class="block text-sm font-medium">College:</label>
+      <input type="text" id="registerCollege" name="registerCollege" class="block w-full px-4 py-2 mb-4 border" required>
+      
+      <label for="registerDepartment" class="block text-sm font-medium">Department:</label>
+      <input type="text" id="registerDepartment" name="registerDepartment" class="block w-full px-4 py-2 mb-4 border" required>
+      
+      <label for="isGraduated" class="block text-sm font-medium">Are you a graduate?</label>
+      <select id="isGraduated" name="isGraduated" class="block w-full px-4 py-2 mb-4 border" required>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      
+      <label for="graduationYear" class="block text-sm font-medium">Graduation Year:</label>
+      <input type="number" id="graduationYear" name="graduationYear" class="block w-full px-4 py-2 mb-4 border" min="1950" max="2026">
+      
       <label for="registerPassword" class="block text-sm font-medium">Password:</label>
       <input type="password" id="registerPassword" name="registerPassword" class="block w-full px-4 py-2 mb-4 border" required>
       
@@ -68,6 +86,7 @@
       <button type="submit" class="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Register</button>
     </form>
   </div>
+
 
   <script>
     function toggleForm(formType) {
