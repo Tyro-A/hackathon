@@ -73,18 +73,42 @@
     <div class="flex items-center mb-4">
       <label class="mr-2" for="entries">Show</label>
       <select class="border border-gray-300 px-2 py-1" id="entries">
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
+        <option value="25">10</option>
+        <option value="50">25</option>
+        <option value="100">50</option>
       </select>
-      <span class="ml-2">entries</span>
+      <span class="ml-2">Projects</span>
+    </div>
+    
+    <!-- Projects List -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+      
+      <!-- Example Project Card -->
+      <div class="bg-gray-200 p-6 rounded-lg shadow-md flex flex-col">
+        <!-- Left Section: Images and Project Details -->
+        <div class="flex flex-wrap gap-4 mb-4">
+          <img src="image1.jpg" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
+          <img src="image2.jpg" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
+          <img src="image3.jpg" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
+          <img src="image4.jpg" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+        </div>
+
+        <!-- Project Information -->
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold mb-2">Project Title (English)</h3>
+          <p class="text-sm text-gray-500 mb-2">Title in Arabic: عنوان المشروع</p>
+          <p class="text-sm mb-2">Supervisor: John Doe</p>
+          <p class="text-sm mb-2">Leader: Jane Doe</p>
+          <p class="text-sm mb-2">Members: Member 1, Member 2</p>
+          <p class="text-sm mb-2">Description: This is a description of the project.</p>
+          <p class="text-sm mb-2">Progress: 70%</p>
+          <p class="text-sm mb-2">Adoption Authority: Authority Name</p>
+          <p class="text-sm mb-4">Documentation: <a href="#" class="text-blue-500">View Document</a></p>
+        </div>
+      </div>
 
     </div>
-    <!-- <div>
-        <a href="Project.html" class="px-4 py-2 bg-gray-300 text-gray-800 rounded flex items-center hover:bg-gray-400 mb-4 ">
-          <i class="fas fa-plus mr-2"></i> Add Project
-        </a>
-    </div>      -->
+
     <div class="flex justify-between items-center mb-4">
       <span>List of upcoming activities at the university</span>
       <input class="border border-gray-300 px-2 py-1" placeholder="Search:" type="text" />
@@ -95,15 +119,6 @@
     </div>
   </main>
 
-  <script>
-    // JavaScript to capture and use selected value
-    const entriesDropdown = document.getElementById('entries');
-    entriesDropdown.addEventListener('change', () => {
-      const selectedValue = entriesDropdown.value;
-      console.log(`Selected entries: ${selectedValue}`);
-      // Use selectedValue as needed
-    });
-  </script>
   <script src="server/view.js"></script>
 </body>
 </html>

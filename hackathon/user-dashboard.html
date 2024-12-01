@@ -6,16 +6,16 @@
   <title>User Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-</head>
-<style>
+  <style>
     .background-logo {
       background-image: url('Images/Uni-Logo.jpg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
     }
-  </style>
-<body class="bg-gray-200">
+</style>
+</head>
+<body class="bg-white">
 
   <!-- Header -->
   <header class="bg-gray-800 text-white">
@@ -66,7 +66,7 @@
 
     <!-- Button to Add New Project -->
     <div class="mb-6">
-      <a href="add-project.html" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Add New Project</a>
+      
     </div>
 
     <!-- Projects List -->
@@ -102,33 +102,15 @@
       </div>
 
       <!-- Another Example Project Card -->
-      <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
-        <!-- Left Section: Images and Project Details -->
-        <div class="flex flex-wrap gap-4 mb-4">
-          <img src="image1.jpg" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-          <img src="image2.jpg" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-          <img src="image3.jpg" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-          <img src="image4.jpg" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
-        </div>
-
-        <!-- Project Information -->
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold mb-2">Another Project Title</h3>
-          <p class="text-sm text-gray-500 mb-2">Title in Arabic: عنوان آخر</p>
-          <p class="text-sm mb-2">Supervisor: Mark Smith</p>
-          <p class="text-sm mb-2">Leader: Lucy Brown</p>
-          <p class="text-sm mb-2">Members: Member 3, Member 4</p>
-          <p class="text-sm mb-2">Description: This is another description.</p>
-          <p class="text-sm mb-2">Progress: 50%</p>
-          <p class="text-sm mb-2">Adoption Authority: Authority Name</p>
-          <p class="text-sm mb-4">Documentation: <a href="#" class="text-blue-500">View Document</a></p>
-        </div>
-
-        <!-- Right Section: Edit and Delete buttons -->
-        <div class="mt-auto flex justify-between space-x-4">
-          <a href="edit-project.html" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition w-full text-center">Edit</a>
-          <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Delete</button>
-        </div>
+      <div class="bg-gray-200 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+        <a href="add-project.html" class="flex flex-col items-center space-y-2">
+          <!-- "+" Icon -->
+          <div class="text-gray-600 text-7xl">
+            <i class="fas fa-plus"></i>
+          </div>
+          <!-- "Add Project" Text -->
+          <p class="text-gray-600 font-semibold">Add Project</p>
+        </a>
       </div>
     </div>
   </main>
