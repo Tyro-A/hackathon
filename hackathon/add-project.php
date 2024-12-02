@@ -65,20 +65,27 @@
   <main class="container mx-auto py-8">
     <h2 class="text-2xl font-bold mb-4">Project Information Form</h2>
 
+
+
+
+
+
+
+
     <!-- Success/Error Message -->
     <div id="formMessage" class="hidden mb-4 text-center"></div>
 
     <!-- Project Form -->
-    <form id="projectForm" class="space-y-4" onsubmit="handleSubmit(event)">
+    <form id="projectForm" class="space-y-4"  action="move.php" method="POST">
       <div class="flex space-x-4">
         <div class="w-1/2">
           <label for="title_arabic" class="block text-sm font-semibold">Title (Arabic):</label>
-          <input type="text" id="title_arabic" name="title_arabic" class="border px-4 py-2 w-full" required />
+          <input type="text" id="title_ar" name="title_ar" class="border px-4 py-2 w-full" required />
         </div>
 
         <div class="w-1/2">
-          <label for="title_english" class="block text-sm font-semibold">Title (English):</label>
-          <input type="text" id="title_english" name="title_english" class="border px-4 py-2 w-full" required />
+          <label for="title_en" class="block text-sm font-semibold">Title (English):</label>
+          <input type="text" id="title_en" name="title_en" class="border px-4 py-2 w-full" required />
         </div>
       </div>
 
@@ -103,8 +110,24 @@
       </div>
 
       <div>
-        <label for="members" class="block text-sm font-semibold">Members (comma separated):</label>
-        <input type="text" id="members" name="members" class="border px-4 py-2 w-full" />
+        <label for="members_1" class="block text-sm font-semibold">Members (comma separated):</label>
+        <input type="text" id="name_1" name="name_1" class="border px-4 py-2 w-full" />
+      </div>
+
+      <div>
+        <label for="members_2" class="block text-sm font-semibold">Members (comma separated):</label>
+        <input type="text" id="name_2" name="name_2" class="border px-4 py-2 w-full" />
+      </div>
+
+      <div>
+        <label for="members_3" class="block text-sm font-semibold">Members (comma separated):</label>
+        <input type="text" id="name_3" name="name_3" class="border px-4 py-2 w-full" />
+
+      </div>
+
+      <div>
+        <label for="members_4" class="block text-sm font-semibold">Members (comma separated):</label>
+        <input type="text" id="name_4" name="name_4" class="border px-4 py-2 w-full" />
       </div>
 
       <div>
@@ -156,55 +179,7 @@
     </form>
   </main>
 
-  <script>
-    function handleSubmit(event) {
-      event.preventDefault(); // Prevent the form from submitting
-
-      // Collecting form data
-      const titleArabic = document.getElementById("title_arabic").value;
-      const titleEnglish = document.getElementById("title_english").value;
-      const category = document.getElementById("category").value;
-      const supervisor = document.getElementById("supervisor").value;
-      const leader = document.getElementById("leader").value;
-      const members = document.getElementById("members").value;
-      const description = document.getElementById("description").value;
-      const progress = document.getElementById("progress").value;
-      const adoptingAuthority = document.getElementById("adoptingAuthority").value; // New field
-
-      // Collecting file inputs if needed
-      const image1 = document.getElementById("image1").files[0];
-      const image2 = document.getElementById("image2").files[0];
-      const image3 = document.getElementById("image3").files[0];
-      const image4 = document.getElementById("image4").files[0];
-      const documentation = document.getElementById("documentation").files[0];
-
-      // Display the collected data (for testing purposes)
-      console.log({
-        titleArabic,
-        titleEnglish,
-        category,
-        supervisor,
-        leader,
-        members,
-        description,
-        progress,
-        adoptingAuthority,
-        image1,
-        image2,
-        image3,
-        image4,
-        documentation
-      });
-
-      // You can now send the data to your server or Google Sheets, etc.
-
-      // Display success message
-      const formMessage = document.getElementById('formMessage');
-      formMessage.classList.remove('hidden');
-      formMessage.classList.add('text-green-600', 'bg-green-100', 'p-4', 'rounded');
-      formMessage.textContent = 'Form submitted successfully!';
-    }
-  </script>
+  
 </body>
 
 </html>
