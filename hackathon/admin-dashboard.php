@@ -44,12 +44,33 @@
       }
 
       // استعلام لاسترداد البيانات
-      $sql = "SELECT title_en,title_ar,supervisor,description,progress,adoption_authority,documintation,members.name_1,members.name_2,members.name_3,
-      members.name_4,images.image_1,images.image_2,images.image_3,images.image_4,users.first_name,users.last_name,category.name FROM projects
-      JOIN members on(projects.members_id=members.members_id)
-      JOIN images on (projects.images_id=images.images_id)
-      JOIN users on (projects.user_id=users.user_id)
-      JOIN category on (projects.cat_id=category.category_id) WHERE approval = 0 ";
+      $sql = "SELECT 
+    project_id, 
+    title_en, 
+    title_ar, 
+    supervisor, 
+    description, 
+    progress, 
+    adoption_authority, 
+    documintation, 
+    members.name_1, 
+    members.name_2, 
+    members.name_3, 
+    members.name_4, 
+    images.image_1, 
+    images.image_2, 
+    images.image_3, 
+    images.image_4, 
+    users.first_name, 
+    users.last_name, 
+    category.name 
+FROM projects
+JOIN members ON projects.members_id = members.members_id
+JOIN images ON projects.images_id = images.images_id
+JOIN users ON projects.user_id = users.user_id
+JOIN category ON projects.cat_id = category.category_id
+WHERE approval IS NULL;
+ ";
 
       $result = $conn->query($sql);
 
@@ -57,6 +78,7 @@
               if ($result->num_rows > 0) {
 
                 while ($row = $result->fetch_assoc()) {
+                  $project_id = $row["project_id"];
                   $title_en = $row['title_en'];
                   $title_ar = $row['title_ar'];
                   $supervisor = $row['supervisor'];
@@ -126,35 +148,7 @@
               $conn->close();
               ?>
 
-      <!-- Another Example Project Card -->
-      <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
-        <!-- Left Section: Images and Project Details -->
-        <div class="flex flex-wrap gap-4 mb-4">
-          <img src="image1.jpg" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-          <img src="image2.jpg" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-          <img src="image3.jpg" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-          <img src="image4.jpg" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
-        </div>
-
-        <!-- Project Information -->
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold mb-2">Another Project Title</h3>
-          <p class="text-sm text-gray-500 mb-2">Title in Arabic: عنوان آخر</p>
-          <p class="text-sm mb-2">Supervisor: Mark Smith</p>
-          <p class="text-sm mb-2">Leader: Lucy Brown</p>
-          <p class="text-sm mb-2">Members: Member 3, Member 4</p>
-          <p class="text-sm mb-2">Description: This is another description.</p>
-          <p class="text-sm mb-2">Progress: 50%</p>
-          <p class="text-sm mb-2">Adoption Authority: Authority Name</p>
-          <p class="text-sm mb-4">Documentation: <a href="#" class="text-blue-500">View Document</a></p>
-        </div>
-
-        <!-- Right Section: Approve and Delete buttons -->
-        <div class="mt-auto flex justify-between space-x-4">
-          <button onclick="approveProject()" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition w-full text-center">Approve</button>
-          <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Delete</button>
-        </div>
-      </div>
+      
     </div>
   </main>
 
