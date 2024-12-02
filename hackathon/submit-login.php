@@ -58,7 +58,7 @@ if ($input['action'] === 'login') {
     }
     // Respond with a success message and redirect URL
 
-} elseif ($input['action'] === 'register') {
+} else{
     // Handle registration logic
     $name = $input['data']['name'];
     $email = $input['data']['email'];
@@ -69,46 +69,33 @@ if ($input['action'] === 'login') {
     $graduationYear = $input['data']['graduationYear'];
     $password = $input['data']['password'];
 
-    // Check if the email already exists
-    $sql = "SELECT user_id FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Insert user data into the database
+    $sql = "INSERT INTO users (first_name, last_name, email, phone, college, department, is_graduated, graduated_year, password)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    if ($result->num_rows > 0) {
-        // Email already exists
+    // Assuming the name is first and last name (split by space)
+    $nameParts = explode(' ', $name);
+    $firstName = $nameParts[0];
+    $lastName = isset($nameParts[1]) ? $nameParts[1] : '';
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssiss", $firstName, $lastName, $email, $phone, $college, $department, $isGraduated, $graduationYear, $password);
+    $result = $stmt->execute();
+
+    if ($result) {
         echo json_encode([
-            'success' => false,
-            'message' => 'Email is already registered.',
+            'success' => true,
+            'message' => 'Registration successful!',
         ]);
     } else {
-        // Insert new user into the database
-        $sql = "INSERT INTO users (name, email, phone, college, department, is_graduated, graduation_year, password) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssss", $name, $email, $phone, $college, $department, $isGraduated, $graduationYear, $password);
-
-        if ($stmt->execute()) {
-            // Successful registration
-            echo json_encode([
-                'success' => true,
-                'message' => 'Registration successful!',
-            ]);
-        } else {
-            // Database error
-            echo json_encode([
-                'success' => false,
-                'message' => 'Registration failed. Please try again.',
-            ]);
-        }
+        echo json_encode([
+            'success' => false,
+            'message' => 'Registration failed. Please try again.',
+        ]);
     }
-} else {
-    // Invalid action
-    echo json_encode([
-        'success' => false,
-        'message' => 'Invalid action.',
-    ]);
+
+    $stmt->close();
 }
 
 $conn->close();
+?>
