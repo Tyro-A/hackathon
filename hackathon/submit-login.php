@@ -48,7 +48,7 @@ if ($action === 'login') {
             $isAdmin = $user['is_admin'] == 1;
 
             // Redirect URLs
-            $redirectUrl = $isAdmin ? 'admin-dashboard.html' : 'user-dashboard.html';
+            $redirectUrl = $isAdmin ? 'admin-dashboard.php' : 'user-dashboard.php';
 
             die(json_encode([
                 'success' => true,
