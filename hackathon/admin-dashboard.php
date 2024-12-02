@@ -1,3 +1,30 @@
+<?php
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "project";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Query to retrieve data
+$sql = "SELECT project_id, title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, approval,
+                    members.name_1, members.name_2, members.name_3, members.name_4, 
+                    images.image_1, images.image_2, images.image_3, images.image_4, 
+                    users.first_name, users.last_name, category.name 
+                    FROM projects
+                    JOIN members ON (projects.members_id = members.members_id)
+                    JOIN images ON (projects.images_id = images.images_id)
+                    JOIN users ON (projects.user_id = users.user_id)
+                    JOIN category ON (projects.cat_id = category.category_id);";
+
+$result = $conn->query($sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,20 +59,20 @@
     </header>
     <!-- Button to switch between forms -->
     <div class="flex justify-center mt-4 space-x-4">
-      <!-- Pending button (Blue) -->
-      <button onclick="toggleForm('pending')" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 transition">
-          Pending
-      </button>
-      
-      <!-- Approved button (Green) -->
-      <button onclick="toggleForm('approved')" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300 transition">
-          Approved
-      </button>
-      
-      <!-- Declined button (Red) -->
-      <button onclick="toggleForm('declined')" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300 transition">
-          Declined
-      </button>
+        <!-- Pending button (Blue) -->
+        <button onclick="toggleForm('pending')" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 transition">
+            Pending
+        </button>
+
+        <!-- Approved button (Green) -->
+        <button onclick="toggleForm('approved')" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300 transition">
+            Approved
+        </button>
+
+        <!-- Declined button (Red) -->
+        <button onclick="toggleForm('declined')" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300 transition">
+            Declined
+        </button>
     </div>
 
     <!-- Admin Dashboard -->
@@ -54,76 +81,30 @@
 
         <!-- Projects List -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php
-            // Database connection
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "project";
 
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // Query to retrieve data
-            $sql = "SELECT title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, 
-                    members.name_1, members.name_2, members.name_3, members.name_4, 
-                    images.image_1, images.image_2, images.image_3, images.image_4, 
-                    users.first_name, users.last_name, category.name 
-                    FROM projects
-                    JOIN members ON (projects.members_id = members.members_id)
-                    JOIN images ON (projects.images_id = images.images_id)
-                    JOIN users ON (projects.user_id = users.user_id)
-                    JOIN category ON (projects.cat_id = category.category_id) 
-                    WHERE approval IS NULL";
-
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $title_en = $row['title_en'];
-                    $title_ar = $row['title_ar'];
-                    $supervisor = $row['supervisor'];
-                    $Description = $row['description'];
-                    $Progress = $row['progress'];
-                    $Adoption_Authority = $row['adoption_authority'];
-                    $Documentation = $row['documintation'];
-                    $members_1 = $row['name_1'];
-                    $members_2 = $row['name_2'];
-                    $members_3 = $row['name_3'];
-                    $members_4 = $row['name_4'];
-                    $images_1 = $row['image_1'];
-                    $images_2 = $row['image_2'];
-                    $images_3 = $row['image_3'];
-                    $images_4 = $row['image_4'];
-                    $Leader_f = $row['first_name'];
-                    $Leader_l = $row['last_name'];
-                    $category = $row['name'];
-            ?>
+            <?php foreach ($result as $project) : ?>
+                <?php if ($project['approval'] === NULL) : ?>
                     <!-- Example Project Card -->
                     <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
                         <!-- Left Section: Images and Project Details -->
                         <div class="flex flex-wrap gap-4 mb-4">
-                            <img src="<?php echo $images_1 ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $images_2 ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $images_3 ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $images_4 ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $project['image_1'] ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $project['image_2'] ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $project['image_3'] ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $$project['image_4'] ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
                         </div>
 
-                        <!-- Project Information -->
                         <div class="flex-1">
-                            <h3 class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
-                            <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
-                            <p class="text-sm mb-2">Category: <?php echo $category ?></p>
-                            <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
-                            <p class="text-sm mb-2">Leader: <?php echo $Leader_f, " ", $Leader_l ?></p>
-                            <p class="text-sm mb-2">Members: <?php echo $members_1 ?>, <?php echo $members_2 ?>, <?php echo $members_3 ?>, <?php echo $members_4 ?></p>
-                            <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
-                            <p class="text-sm mb-2">Description: <?php echo $Description; ?></p>
-                            <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
-                            <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+                            <h3 class="text-lg font-semibold mb-2"><?php echo $project['title_en']; ?></h3>
+                            <p class="text-sm text-gray-500 mb-2"><?php echo $project['title_ar']; ?></p>
+                            <p class="text-sm mb-2">Category: <?php echo $project['name']; ?></p>
+                            <p class="text-sm mb-2">Supervisor: <?php echo $project['supervisor']; ?></p>
+                            <p class="text-sm mb-2">Leader: <?php echo $project['first_name'], " ", $project['last_name'] ?></p>
+                            <p class="text-sm mb-2">Members: <?php echo $project['name_1'] ?>, <?php echo $project['name_2'] ?>, <?php echo $project['name_3'] ?>, <?php echo $project['name_4'] ?></p>
+                            <p class="text-sm mb-2">Progress: <?php echo $project['progress'] ?>%</p>
+                            <p class="text-sm mb-2">Description: <?php echo $project['description']; ?></p>
+                            <p class="text-sm mb-2">Adoption Authority: <?php echo $project['adoption_authority'] ?></p>
+                            <p class="text-sm mb-2">View Documentation: <?php echo $project['documintation']; ?></p>
                         </div>
 
                         <!-- Right Section: Approve and Delete buttons -->
@@ -132,14 +113,8 @@
                             <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Declined</button>
                         </div>
                     </div>
-            <?php
-                }
-            } else {
-                echo "لايوجد";
-            }
-
-            $conn->close();
-            ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
     </div>
 
@@ -148,76 +123,30 @@
 
         <!-- Projects List -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php
-            // Database connection
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "project";
 
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // Query to retrieve data
-            $sql = "SELECT title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, 
-                    members.name_1, members.name_2, members.name_3, members.name_4, 
-                    images.image_1, images.image_2, images.image_3, images.image_4, 
-                    users.first_name, users.last_name, category.name 
-                    FROM projects
-                    JOIN members ON (projects.members_id = members.members_id)
-                    JOIN images ON (projects.images_id = images.images_id)
-                    JOIN users ON (projects.user_id = users.user_id)
-                    JOIN category ON (projects.cat_id = category.category_id) 
-                    WHERE approval = 1";
-
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $title_en = $row['title_en'];
-                    $title_ar = $row['title_ar'];
-                    $supervisor = $row['supervisor'];
-                    $Description = $row['description'];
-                    $Progress = $row['progress'];
-                    $Adoption_Authority = $row['adoption_authority'];
-                    $Documentation = $row['documintation'];
-                    $members_1 = $row['name_1'];
-                    $members_2 = $row['name_2'];
-                    $members_3 = $row['name_3'];
-                    $members_4 = $row['name_4'];
-                    $images_1 = $row['image_1'];
-                    $images_2 = $row['image_2'];
-                    $images_3 = $row['image_3'];
-                    $images_4 = $row['image_4'];
-                    $Leader_f = $row['first_name'];
-                    $Leader_l = $row['last_name'];
-                    $category = $row['name'];
-            ?>
+            <?php foreach ($result as $project) : ?>
+                <?php if ($project['approval'] === "1") : ?>
                     <!-- Example Project Card -->
                     <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
                         <!-- Left Section: Images and Project Details -->
                         <div class="flex flex-wrap gap-4 mb-4">
-                            <img src="<?php echo $images_1 ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $images_2 ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $images_3 ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $images_4 ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $project['image_1'] ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $project['image_2'] ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $project['image_3'] ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $$project['image_4'] ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
                         </div>
 
-                        <!-- Project Information -->
                         <div class="flex-1">
-                            <h3 class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
-                            <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
-                            <p class="text-sm mb-2">Category: <?php echo $category ?></p>
-                            <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
-                            <p class="text-sm mb-2">Leader: <?php echo $Leader_f, " ", $Leader_l ?></p>
-                            <p class="text-sm mb-2">Members: <?php echo $members_1 ?>, <?php echo $members_2 ?>, <?php echo $members_3 ?>, <?php echo $members_4 ?></p>
-                            <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
-                            <p class="text-sm mb-2">Description: <?php echo $Description; ?></p>
-                            <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
-                            <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+                            <h3 class="text-lg font-semibold mb-2"><?php echo $project['title_en']; ?></h3>
+                            <p class="text-sm text-gray-500 mb-2"><?php echo $project['title_ar']; ?></p>
+                            <p class="text-sm mb-2">Category: <?php echo $project['name']; ?></p>
+                            <p class="text-sm mb-2">Supervisor: <?php echo $project['supervisor']; ?></p>
+                            <p class="text-sm mb-2">Leader: <?php echo $project['first_name'], " ", $project['last_name'] ?></p>
+                            <p class="text-sm mb-2">Members: <?php echo $project['name_1'] ?>, <?php echo $project['name_2'] ?>, <?php echo $project['name_3'] ?>, <?php echo $project['name_4'] ?></p>
+                            <p class="text-sm mb-2">Progress: <?php echo $project['progress'] ?>%</p>
+                            <p class="text-sm mb-2">Description: <?php echo $project['description']; ?></p>
+                            <p class="text-sm mb-2">Adoption Authority: <?php echo $project['adoption_authority'] ?></p>
+                            <p class="text-sm mb-2">View Documentation: <?php echo $project['documintation']; ?></p>
                         </div>
 
                         <!-- Right Section: Approve and Delete buttons -->
@@ -225,14 +154,8 @@
                             <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Declined</button>
                         </div>
                     </div>
-            <?php
-                }
-            } else {
-                echo "لايوجد";
-            }
-
-            $conn->close();
-            ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
     </div>
 
@@ -241,76 +164,30 @@
 
         <!-- Projects List -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <?php
-            // Database connection
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "project";
 
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // Query to retrieve data
-            $sql = "SELECT title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, 
-                    members.name_1, members.name_2, members.name_3, members.name_4, 
-                    images.image_1, images.image_2, images.image_3, images.image_4, 
-                    users.first_name, users.last_name, category.name 
-                    FROM projects
-                    JOIN members ON (projects.members_id = members.members_id)
-                    JOIN images ON (projects.images_id = images.images_id)
-                    JOIN users ON (projects.user_id = users.user_id)
-                    JOIN category ON (projects.cat_id = category.category_id) 
-                    WHERE approval = 0";
-
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $title_en = $row['title_en'];
-                    $title_ar = $row['title_ar'];
-                    $supervisor = $row['supervisor'];
-                    $Description = $row['description'];
-                    $Progress = $row['progress'];
-                    $Adoption_Authority = $row['adoption_authority'];
-                    $Documentation = $row['documintation'];
-                    $members_1 = $row['name_1'];
-                    $members_2 = $row['name_2'];
-                    $members_3 = $row['name_3'];
-                    $members_4 = $row['name_4'];
-                    $images_1 = $row['image_1'];
-                    $images_2 = $row['image_2'];
-                    $images_3 = $row['image_3'];
-                    $images_4 = $row['image_4'];
-                    $Leader_f = $row['first_name'];
-                    $Leader_l = $row['last_name'];
-                    $category = $row['name'];
-            ?>
+            <?php foreach ($result as $project) : ?>
+                <?php if ($project['approval'] === "0") : ?>
                     <!-- Example Project Card -->
                     <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
                         <!-- Left Section: Images and Project Details -->
                         <div class="flex flex-wrap gap-4 mb-4">
-                            <img src="<?php echo $images_1 ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $images_2 ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $images_3 ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $images_4 ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $project['image_1'] ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $project['image_2'] ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $project['image_3'] ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
+                            <img src="<?php echo $$project['image_4'] ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
                         </div>
 
-                        <!-- Project Information -->
                         <div class="flex-1">
-                            <h3 class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
-                            <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
-                            <p class="text-sm mb-2">Category: <?php echo $category ?></p>
-                            <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
-                            <p class="text-sm mb-2">Leader: <?php echo $Leader_f, " ", $Leader_l ?></p>
-                            <p class="text-sm mb-2">Members: <?php echo $members_1 ?>, <?php echo $members_2 ?>, <?php echo $members_3 ?>, <?php echo $members_4 ?></p>
-                            <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
-                            <p class="text-sm mb-2">Description: <?php echo $Description; ?></p>
-                            <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
-                            <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+                            <h3 class="text-lg font-semibold mb-2"><?php echo $project['title_en']; ?></h3>
+                            <p class="text-sm text-gray-500 mb-2"><?php echo $project['title_ar']; ?></p>
+                            <p class="text-sm mb-2">Category: <?php echo $project['name']; ?></p>
+                            <p class="text-sm mb-2">Supervisor: <?php echo $project['supervisor']; ?></p>
+                            <p class="text-sm mb-2">Leader: <?php echo $project['first_name'], " ", $project['last_name'] ?></p>
+                            <p class="text-sm mb-2">Members: <?php echo $project['name_1'] ?>, <?php echo $project['name_2'] ?>, <?php echo $project['name_3'] ?>, <?php echo $project['name_4'] ?></p>
+                            <p class="text-sm mb-2">Progress: <?php echo $project['progress'] ?>%</p>
+                            <p class="text-sm mb-2">Description: <?php echo $project['description']; ?></p>
+                            <p class="text-sm mb-2">Adoption Authority: <?php echo $project['adoption_authority'] ?></p>
+                            <p class="text-sm mb-2">View Documentation: <?php echo $project['documintation']; ?></p>
                         </div>
 
                         <!-- Right Section: Approve and Delete buttons -->
@@ -318,14 +195,8 @@
                             <button onclick="approveProject()" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition w-full text-center">Approve</button>
                         </div>
                     </div>
-            <?php
-                }
-            } else {
-                echo "لايوجد";
-            }
-
-            $conn->close();
-            ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
     </div>
 
