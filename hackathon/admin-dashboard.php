@@ -21,7 +21,6 @@ $sql = "SELECT project_id, title_en, title_ar, supervisor, description, progress
                     JOIN images ON (projects.images_id = images.images_id)
                     JOIN users ON (projects.user_id = users.user_id)
                     JOIN category ON (projects.cat_id = category.category_id);";
-
 $result = $conn->query($sql);
 
 ?>
@@ -201,10 +200,11 @@ $result = $conn->query($sql);
 
                         <!-- Right Section: Approve and Delete buttons -->
                         <div class="mt-auto flex justify-between space-x-4">
-                        <form action='process-approval.php' method='POST'>
+                            <form action='process-approval.php' method='POST'>
                                 <input type='hidden' name='project_id' value='<?= $project['project_id']; ?>'>
                                 <button onclick="approveProject()" value='approve' name='action' class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition w-full text-center">Approve</button>
-                            </form>                        </div>
+                            </form>
+                        </div>
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>

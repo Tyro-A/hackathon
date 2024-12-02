@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.html'); // Redirect to login page if not logged in
-    exit();
+  header('Location: login.html'); // Redirect to login page if not logged in
+  exit();
 }
 
 // Database connection
@@ -14,11 +14,11 @@ $dbname = "project";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+  die("Connection failed: " . $conn->connect_error);
 }
 
 $user_id = $_SESSION['user_id']; // Get the logged-in user's ID
-$sql = "SELECT title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, 
+$sql = "SELECT project_id, title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, 
         members.name_1, members.name_2, members.name_3, members.name_4, 
         images.image_1, images.image_2, images.image_3, images.image_4, 
         users.first_name, users.last_name, category.name 
@@ -33,10 +33,12 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,6 +54,7 @@ $result = $stmt->get_result();
     }
   </style>
 </head>
+
 <body class="bg-white">
 
   <!-- Header -->
@@ -59,17 +62,17 @@ $result = $stmt->get_result();
     <div class="container mx-auto flex justify-between items-center py-2 px-4">
       <div class="flex items-center space-x-4">
         <a href="index.php">
-            <i class="fas fa-home text-xl"></i>
+          <i class="fas fa-home text-xl"></i>
         </a>
       </div>
       <div class="flex items-center space-x-4">
         <i class="fas fa-envelope text-xl"></i>
         <i class="fas fa-search text-xl"></i>
         <a href="login.html">
-            <i class="fas fa-user text-xl"></i>
+          <i class="fas fa-user text-xl"></i>
         </a>
         <a href="logout.php">
-            <i class="text-xl">logout</i>
+          <i class="text-xl">logout</i>
         </a>
       </div>
     </div>
@@ -106,64 +109,69 @@ $result = $stmt->get_result();
 
     <!-- Projects List -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <?php
+      <?php
       if ($result->num_rows > 0) {
-          while ($row = $result->fetch_assoc()) {
-            $title_en = $row['title_en'];
-            $title_ar = $row['title_ar'];
-            $supervisor = $row['supervisor'];
-            $Description = $row['description'];
-            $Progress = $row['progress'];
-            $Adoption_Authority = $row['adoption_authority'];
-            $Documentation = $row['documintation'];
-            $members_1 = $row['name_1'];
-            $members_2 = $row['name_2'];
-            $members_3 = $row['name_3'];
-            $members_4 = $row['name_4'];
-            $images_1 = $row['image_1'];
-            $images_2 = $row['image_2'];
-            $images_3 = $row['image_3'];
-            $images_4 = $row['image_4'];
-            $Leader_f = $row['first_name'];
-            $Leader_l = $row['last_name'];
-            $category = $row['name'];
-    ?>
-      <!-- Example Project Card -->
-      <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
-        <!-- Left Section: Images and Project Details -->
-        <div class="flex flex-wrap gap-4 mb-4">
-          <img src="<?php echo $images_1 ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-          <img src="<?php echo $images_2 ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-          <img src="<?php echo $images_3 ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-          <img src="<?php echo $images_4 ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
-        </div>
+        while ($row = $result->fetch_assoc()) {
+          $project_id = $row['project_id'];
+          $title_en = $row['title_en'];
+          $title_ar = $row['title_ar'];
+          $supervisor = $row['supervisor'];
+          $Description = $row['description'];
+          $Progress = $row['progress'];
+          $Adoption_Authority = $row['adoption_authority'];
+          $Documentation = $row['documintation'];
+          $members_1 = $row['name_1'];
+          $members_2 = $row['name_2'];
+          $members_3 = $row['name_3'];
+          $members_4 = $row['name_4'];
+          $images_1 = $row['image_1'];
+          $images_2 = $row['image_2'];
+          $images_3 = $row['image_3'];
+          $images_4 = $row['image_4'];
+          $Leader_f = $row['first_name'];
+          $Leader_l = $row['last_name'];
+          $category = $row['name'];
+      ?>
+          <!-- Example Project Card -->
+          <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
+            <!-- Left Section: Images and Project Details -->
+            <div class="flex flex-wrap gap-4 mb-4">
+              <img src="<?php echo $images_1 ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
+              <img src="<?php echo $images_2 ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
+              <img src="<?php echo $images_3 ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
+              <img src="<?php echo $images_4 ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+            </div>
 
-        <!-- Project Information -->
-        <div class="flex-1">
-          <h3  class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
-          <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
-          <p class="text-sm mb-2">Catagory: <?php echo  $category ?></p>
-          <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
-          <p class="text-sm mb-2">Leader: <?php echo $Leader_f ," ", $Leader_l?></p>
-          <p  class="text-sm mb-2">Members: <?php echo $members_1 ?>, <?php echo $members_2 ?>, <?php echo $members_3 ?>, <?php echo $members_4?></p>
-          <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
-          <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
-          <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
-          <p  class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
-        </div>
-        <!-- Right Section: Edit and Delete buttons -->
-        <div class="mt-auto flex justify-between space-x-4">
-          <a href="edit-project.html" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition w-full text-center">Edit</a>
-        </div>
-      </div>
+            <!-- Project Information -->
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
+              <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
+              <p class="text-sm mb-2">Catagory: <?php echo  $category ?></p>
+              <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
+              <p class="text-sm mb-2">Leader: <?php echo $Leader_f, " ", $Leader_l ?></p>
+              <p class="text-sm mb-2">Members: <?php echo $members_1 ?>, <?php echo $members_2 ?>, <?php echo $members_3 ?>, <?php echo $members_4 ?></p>
+              <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
+              <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
+              <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
+              <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+            </div>
 
-        <?php
-            }
-        } else {
-            echo "No projects found.";
+
+            <div class="mt-auto flex justify-between space-x-4">
+              <form action='edit-project.php' method='POST'>
+                <input type='hidden' name='project_id' value='<?= $project_id ?>'>
+                <button class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition w-full text-center">Edit</button>
+              </form>
+            </div>
+          </div>
+
+      <?php
         }
-        $conn->close();
-        ?>
+      } else {
+        echo "No projects found.";
+      }
+      $conn->close();
+      ?>
 
       <!-- Add Project -->
       <div class="bg-gray-200 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
@@ -178,6 +186,7 @@ $result = $stmt->get_result();
       </div>
     </div>
   </main>
-  
+
 </body>
+
 </html>

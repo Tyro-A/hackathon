@@ -96,7 +96,7 @@ if ($conn->connect_error) {
 }
 
 // استعلام لاسترداد البيانات
-$sql = "SELECT title_en,title_ar,supervisor,description,progress,adoption_authority,documintation,members.name_1,members.name_2,members.name_3,
+$sql = "SELECT project_id, title_en,title_ar,supervisor,description,progress,adoption_authority,documintation,members.name_1,members.name_2,members.name_3,
 members.name_4,images.image_1,images.image_2,images.image_3,images.image_4,users.first_name,users.last_name,category.name FROM projects
 JOIN members on(projects.members_id=members.members_id)
 JOIN images on (projects.images_id=images.images_id)
@@ -109,6 +109,7 @@ $result = $conn->query($sql);
               if ($result->num_rows > 0) {
 
                 while ($row = $result->fetch_assoc()) {
+                  $project_id = $row['project_id'];
                   $title_en = $row['title_en'];
                   $title_ar = $row['title_ar'];
                   $supervisor = $row['supervisor'];
@@ -127,11 +128,6 @@ $result = $conn->query($sql);
                   $Leader_f = $row['first_name'];
                   $Leader_l = $row['last_name'];
                   $category = $row['name'];
-                 
-                  
-                  
-    
-
               ?>
 
 
@@ -142,10 +138,10 @@ $result = $conn->query($sql);
       <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
         <!-- Left Section: Images and Project Details -->
         <div class="flex flex-wrap gap-4 mb-4">
-          <img src="<?php echo $images_1 ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-          <img src="<?php echo $images_2 ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-          <img src="<?php echo $images_3 ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-          <img src="<?php echo $images_4 ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+          <img src="uplouds/<?php echo "$project_id" ?>/<?php echo "$images_1" ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
+          <img src="uplouds/<?php echo "$project_id" ?>/<?php echo "$images_1" ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
+          <img src="uplouds/<?php echo "$project_id" ?>/<?php echo "$images_1" ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
+          <img src="uplouds/<?php echo "$project_id" ?>/<?php echo "$images_1" ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
         </div>
 
         <!-- Project Information -->
