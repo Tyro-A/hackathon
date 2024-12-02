@@ -152,26 +152,18 @@ $result = $conn->query($sql);
         <div class="flex-1">
           <h3  class="text-lg font-semibold mb-2"><?php echo $title_en; ?>  </p></h3>
           <p  class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?>  </p></p>
-          <p  class="text-sm mb-2"><?php echo  $category ?></p>
-          <p  class="text-sm mb-2"><?php echo $supervisor; ?>  </p></p>
-          <p  class="text-sm mb-2"><?php echo $Description; ?></p>
-          <p  class="text-sm mb-2"><?php echo $Progress ?></p>
-          <p  class="text-sm mb-2"><?php echo $Adoption_Authority ?></p>
-          <p  class="text-sm mb-2"><?php echo $Documentation ?></p>
-          <p  class="text-sm mb-2"><?php echo $members_1 ?></p>
-          <p  class="text-sm mb-2"><?php echo $members_2 ?></p>
-          <p  class="text-sm mb-2"><?php echo $members_3 ?></p>
-          <p  class="text-sm mb-2"><?php echo $members_4?></p>
+          <p  class="text-sm mb-2">Catagory: <?php echo  $category ?></p>
+          <p  class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?>  </p></p>
+          <p  class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
+          <p  class="text-sm mb-2">Progress: <?php echo $Progress ?></p>
+          <p  class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
+          <p  class="text-sm mb-2">Leader: <?php echo $Leader_f ," ", $Leader_l?></p>
+          <p  class="text-sm mb-2">Members: <?php echo $members_1 ?>, <?php echo $members_2 ?>, <?php echo $members_3 ?>, <?php echo $members_4?></p>
           <p  class="text-sm mb-2"><?php echo $images_1 ?></p>
           <p  class="text-sm mb-2"><?php echo $images_2 ?></p>
           <p  class="text-sm mb-2"><?php echo $images_3 ?></p>
           <p  class="text-sm mb-2"><?php echo $images_4 ?></p>
-          <p  class=""><?php echo $Leader_f ," ", $Leader_l?></p>  
-         
-     
-
-          
-
+          <p  class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
         </div>
       </div>
 
