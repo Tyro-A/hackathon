@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $image_2 = $conn->real_escape_string($_POST['image2']);
     $image_3 = $conn->real_escape_string($_POST['image3']);
     $image_4 = $conn->real_escape_string($_POST['image4']);
-    $user_id = (int)$_POST['user_id']; // Ensure user_id is provided in the form
+    // $user_id = (int)$_POST['user_id']; // Ensure user_id is provided in the form
 
     // Start transaction
     $conn->begin_transaction();
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Insert into `projects` table
         $sql = "INSERT INTO projects (title_ar, title_en, supervisor, description, progress, adoption_authority, members_id, images_id, user_id, cat_id) 
-                VALUES ('$title_ar', '$title_en', '$supervisor', '$description', $progress, '$adoptingAuthority', $members_id, $images_id, $user_id, $category_id)";
+                VALUES ('$title_ar', '$title_en', '$supervisor', '$description', $progress, '$adoptingAuthority', $members_id, $images_id, 1, $category_id)";
         $conn->query($sql);
 
         // Commit transaction
