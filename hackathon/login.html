@@ -39,8 +39,9 @@
   <div id="loginForm" class="max-w-md mx-auto mt-8 p-6 bg-white rounded shadow-md hidden">
     <h2 class="text-2xl font-semibold mb-4">Login</h2>
     <form onsubmit="handleLoginSubmit(event)">
-      <label for="loginUsername" class="block text-sm font-medium">Username:</label>
-      <input type="text" id="loginUsername" name="loginUsername" class="block w-full px-4 py-2 mb-4 border" required>
+      <label for="loginUsername" class="block text-sm font-medium">Email:</label>
+      <input type="email" id="loginUsername" name="loginUsername" class="block w-full px-4 py-2 mb-4 border" required>
+      
       
       <label for="loginPassword" class="block text-sm font-medium">Password:</label>
       <input type="password" id="loginPassword" name="loginPassword" class="block w-full px-4 py-2 mb-4 border" required>
@@ -52,7 +53,7 @@
   <!-- Register Form -->
   <div id="registerForm" class="max-w-md mx-auto mt-8 p-6 bg-white rounded shadow-md hidden">
     <h2 class="text-2xl font-semibold mb-4">Register</h2>
-    <form onsubmit="handleFormSubmit(event)">
+    <form onsubmit="handleRegisterSubmit(event)">
       <label for="registerName" class="block text-sm font-medium">Name:</label>
       <input type="text" id="registerName" name="registerName" class="block w-full px-4 py-2 mb-4 border" required>
       
@@ -78,15 +79,15 @@
       <input type="number" id="graduationYear" name="graduationYear" class="block w-full px-4 py-2 mb-4 border" min="1950" max="2026">
       
       <label for="registerPassword" class="block text-sm font-medium">Password:</label>
-      <input type="password" id="registerPassword" name="registerPassword" class="block w-full px-4 py-2 mb-4 border" required>
+      <input type="password" id="registerPassword" name="registerPassword" class="block w-full px-4 py-2 mb-2 border" required>
       
       <label for="confirmPassword" class="block text-sm font-medium">Confirm Password:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" class="block w-full px-4 py-2 mb-4 border" required>
+      <input type="password" id="confirmPassword" name="confirmPassword" class="block w-full px-4 py-2 mb-2 border" required>
+      <p id="passwordError" class="text-red-500 text-sm hidden">Passwords do not match!</p>
       
       <button type="submit" class="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Register</button>
     </form>
   </div>
-
 
   <script>
     function toggleForm(formType) {
@@ -106,29 +107,72 @@
     window.onload = function() {
       toggleForm('login');
     }
-
-    // Handle form submission for Login
+    // Handle Login Form Submission
     function handleLoginSubmit(event) {
-      event.preventDefault(); // Prevent the default form submission
-      const username = document.getElementById('loginUsername').value;
-      const password = document.getElementById('loginPassword').value;
-
-      // Check if the username and password are "admin"
-      if (username === 'admin' && password === 'admin') {
-        window.location.href = 'admin-dashboard.html'; // Redirect to admin dashboard
+      event.preventDefault();
+  
+      const loginData = {
+        username: document.getElementById('loginUsername').value,
+        password: document.getElementById('loginPassword').value,
+      };
+  
+      fetch('submit-login.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action: 'login', data: loginData }),
+      })
+        .then(response => response.json())
+        .then(result => {
+          if (result.success) {
+            window.location.href = result.redirectUrl; // Redirect based on the server response
+          } else {
+            alert(result.message || 'Login failed.');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+  
+    // Handle Register Form Submission
+    function handleRegisterSubmit(event) {
+      event.preventDefault();
+  
+      if (validatePasswords()) {
+        const registerData = {
+          name: document.getElementById('registerName').value,
+          email: document.getElementById('registerEmail').value,
+          phone: document.getElementById('registerPhone').value,
+          college: document.getElementById('registerCollege').value,
+          department: document.getElementById('registerDepartment').value,
+          isGraduated: document.getElementById('isGraduated').value,
+          graduationYear: document.getElementById('graduationYear').value || null,
+          password: document.getElementById('registerPassword').value,
+        };
+  
+        fetch('submit-login.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ action: 'register', data: registerData }),
+        })
+          .then(response => response.json())
+          .then(result => {
+            if (result.success) {
+              alert('Registration successful! Redirecting...');
+              window.location.href = 'login.html';
+            } else {
+              alert(result.message || 'Registration failed.');
+            }
+          })
+          .catch(error => console.error('Error:', error));
       } else {
-        // Handle regular user login
-        alert("Login successful! Redirecting to user dashboard...");
-        window.location.href = 'user-dashboard.html'; // Redirect to user dashboard
+        alert('Passwords do not match.');
       }
     }
-
-    // Form submit handler for Register (to prevent default submission for now)
-    function handleFormSubmit(event) {
-      event.preventDefault(); // Prevent the form from submitting
-      alert("Form submitted (for demo purposes)");
-    }
   </script>
+  
 
 </body>
 </html>

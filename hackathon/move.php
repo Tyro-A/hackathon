@@ -1,69 +1,77 @@
 <?php
-// اتصال بقاعدة البيانات
+// Database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "project";
 
-// إنشاء الاتصال
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// التحقق من الاتصال
+// Check connection
 if ($conn->connect_error) {
-    die("فشل الاتصال: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// معالجة البيانات المرسلة من النموذج
+// Process form data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // استلام البيانات من النموذج
-    $title_ar = $_POST['title_ar'];
-    $title_en = $_POST['title_en'];
-    $supervisor = $_POST['supervisor'];
-    $description = $_POST['description'];
-    $progress = $_POST['progress'];
-    $adoptingAuthority = $_POST['adoptingAuthority'];
-    $category_name = $_POST['category'];
-    $name_1 = $_POST['name_1'];
-    $name_2 = $_POST['name_2'];
-    $name_3 = $_POST['name_3'];
-    $name_4 = $_POST['name_4'];
-    $image_1 = $_POST['image1'];
-    $image_2 = $_POST['image2'];
-    $image_3 = $_POST['image3'];
-    $image_4 = $_POST['image4'];
+    // Receive data from the form
+    $title_ar = $conn->real_escape_string($_POST['title_ar']);
+    $title_en = $conn->real_escape_string($_POST['title_en']);
+    $supervisor = $conn->real_escape_string($_POST['supervisor']);
+    $description = $conn->real_escape_string($_POST['description']);
+    $progress = (int)$_POST['progress'];
+    $adoptingAuthority = $conn->real_escape_string($_POST['adoptingAuthority']);
+    $category_name = $conn->real_escape_string($_POST['category']);
+    $name_1 = $conn->real_escape_string($_POST['name_1']);
+    $name_2 = $conn->real_escape_string($_POST['name_2']);
+    $name_3 = $conn->real_escape_string($_POST['name_3']);
+    $name_4 = $conn->real_escape_string($_POST['name_4']);
+    $image_1 = $conn->real_escape_string($_POST['image1']);
+    $image_2 = $conn->real_escape_string($_POST['image2']);
+    $image_3 = $conn->real_escape_string($_POST['image3']);
+    $image_4 = $conn->real_escape_string($_POST['image4']);
+    // $user_id = (int)$_POST['user_id']; // Ensure user_id is provided in the form
 
-    // استخدام استعلام واحد لإدخال البيانات في جداول متعددة
-    $conn->autocommit(FALSE); // تعطيل التحديث التلقائي
+    // Start transaction
+    $conn->begin_transaction();
 
-    $success = true;
-    $sql .= "INSERT INTO members (name_1, name_2, name_3, name_4) 
-            VALUES ('$name_1', '$name_2', '$name_3', '$name_4');";
-    // إنشاء استعلام واحد يضم جميع الإدخالات
-    $sql = "INSERT INTO projects (title_ar, title_en, supervisor, description, progress, adoption_authority, members_id) 
-            VALUES ('$title_ar', '$title_en', '$supervisor', '$description', $progress, '$adoptingAuthority', '');";
-    $sql .= "INSERT INTO category (name) VALUES ('$category_name');";
-    $sql .= "INSERT INTO images (image_1, image_2, image_3, image_4) 
-            VALUES ('$image_1', '$image_2', '$image_3', '$image_4');";
+    try {
+        // Insert into `members` table
+        $sql = "INSERT INTO members (name_1, name_2, name_3, name_4) 
+                VALUES ('$name_1', '$name_2', '$name_3', '$name_4')";
+        $conn->query($sql);
+        $members_id = $conn->insert_id;
 
-            $sql .="";
+        // Insert into `images` table
+        $sql = "INSERT INTO images (image_1, image_2, image_3, image_4) 
+                VALUES ('$image_1', '$image_2', '$image_3', '$image_4')";
+        $conn->query($sql);
+        $images_id = $conn->insert_id;
 
-    if ($conn->multi_query($sql)) {
-        do {
-            // استمرار التنفيذ حتى نهاية النتائج
-        } while ($conn->next_result());
+        // Insert into `category` table if it doesn't exist
+        $sql = "SELECT category_id FROM category WHERE name = '$category_name'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $category_id = $result->fetch_assoc()['category_id'];
+        } else {
+            $sql = "INSERT INTO category (name) VALUES ('$category_name')";
+            $conn->query($sql);
+            $category_id = $conn->insert_id;
+        }
 
-        echo "تمت إضافة البيانات بنجاح";
-        $conn->commit(); // تأكيد التحديثات
-    } else {
-        $success = false;
+        // Insert into `projects` table
+        $sql = "INSERT INTO projects (title_ar, title_en, supervisor, description, progress, adoption_authority, members_id, images_id, user_id, cat_id) 
+                VALUES ('$title_ar', '$title_en', '$supervisor', '$description', $progress, '$adoptingAuthority', $members_id, $images_id, 1, $category_id)";
+        $conn->query($sql);
+
+        // Commit transaction
+        $conn->commit();
+        echo "Data added successfully.";
+    } catch (Exception $e) {
+        // Rollback on error
+        $conn->rollback();
+        echo "Error: " . $e->getMessage();
     }
-
-    if (!$success) {
-        echo "حدثت مشكلة أثناء إضافة البيانات";
-        $conn->rollback(); // التراجع عن التحديثات في حالة حدوث خطأ
-    }
-
-    $conn->autocommit(TRUE); // تفعيل التحديث التلقائي مرة أخرى
 }
 
 $conn->close();

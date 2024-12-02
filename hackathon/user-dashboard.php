@@ -162,7 +162,7 @@
 
       <!-- Add Project -->
       <div class="bg-gray-200 p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
-        <a href="add-project.html" class="flex flex-col items-center space-y-2">
+        <a href="add-project.php" class="flex flex-col items-center space-y-2">
           <!-- "+" Icon -->
           <div class="text-gray-600 text-7xl">
             <i class="fas fa-plus"></i>
