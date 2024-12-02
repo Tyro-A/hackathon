@@ -115,7 +115,7 @@ $result = $conn->query($sql);
                             </form>
                             <form action='process-approval.php' method='POST'>
                                 <input type='hidden' name='project_id' value='<?= $project['project_id']; ?>'>
-                                <button onclick="deleteProject()" value='decline' name='action' class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Declined</button>
+                                <button onclick="deleteProject()" value='decline' name='action' class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Decline</button>
                             </form>
                         </div>
                     </div>
@@ -159,7 +159,7 @@ $result = $conn->query($sql);
                         <div class="mt-auto flex justify-between space-x-4">
                             <form action='process-approval.php' method='POST'>
                                 <input type='hidden' name='project_id' value='<?= $project['project_id']; ?>'>
-                                <button onclick="deleteProject()" value='decline' name='action' class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Declined</button>
+                                <button onclick="deleteProject()" value='decline' name='action' class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Decline</button>
                             </form>
                         </div>
                     </div>
