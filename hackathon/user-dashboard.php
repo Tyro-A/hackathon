@@ -21,7 +21,7 @@
   <header class="bg-gray-800 text-white">
     <div class="container mx-auto flex justify-between items-center py-2 px-4">
       <div class="flex items-center space-x-4">
-        <a href="index.html">
+        <a href="index.php">
             <i class="fas fa-home text-xl"></i>
         </a>
       </div>
