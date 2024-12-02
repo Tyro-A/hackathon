@@ -1,103 +1,107 @@
 <?php
-// Enable error reporting for debugging (remove in production)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Start the session to handle login
+session_start();
 
-// Database connection parameters
-$host = '127.0.0.1';
-$dbname = 'project';
-$username = 'root'; // Replace with your database username
-$password = ''; // Replace with your database password
+// Database connection
+$servername = "localhost";
+$db_username = "root";
+$db_password = "";
+$db_name = "project";
 
-try {
-    // Create a new PDO instance
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die(json_encode(['success' => false, 'message' => 'Database connection failed: ' . $e->getMessage()]));
+// Create connection
+$conn = new mysqli($servername, $db_username, $db_password, $db_name);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Get POST data
-$requestPayload = file_get_contents('php://input');
-$request = json_decode($requestPayload, true);
+// Get the raw POST data from the client
+$input = json_decode(file_get_contents('php://input'), true);
 
-if (!$request || !isset($request['action'], $request['data'])) {
-    die(json_encode(['success' => false, 'message' => 'Invalid request.']));
-}
+if ($input['action'] === 'login') {
+    // Handle login logic
+    $username = $input['data']['username'];
+    $password = $input['data']['password'];
 
-$action = $request['action'];
-$data = $request['data'];
+    // Validate user credentials from the database
+    $sql = "SELECT user_id, first_name, last_name FROM users WHERE email = ? AND password = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-if ($action === 'login') {
-    $email = $data['username'] ?? '';
-    $password = $data['password'] ?? '';
-
-    // Validate email and password
-    if (empty($email) || empty($password)) {
-        die(json_encode(['success' => false, 'message' => 'Email and password are required.']));
-    }
-
-    try {
-        // Query the database for the user
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
-        $stmt->execute(['email' => $email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user && $user['password'] === $password) {
-            // Check if user is admin
-            $isAdmin = $user['is_admin'] == 1;
-
-            // Redirect URLs
-            $redirectUrl = $isAdmin ? 'admin-dashboard.php' : 'user-dashboard.php';
-
-            die(json_encode([
-                'success' => true,
-                'redirectUrl' => $redirectUrl
-            ]));
-        } else {
-            die(json_encode(['success' => false, 'message' => 'Invalid email or password.']));
-        }
-    } catch (PDOException $e) {
-        die(json_encode(['success' => false, 'message' => 'Database query failed: ' . $e->getMessage()]));
-    }
-} elseif ($action === 'register') {
-    // Registration logic
-    $name = $data['name'] ?? '';
-    $email = $data['email'] ?? '';
-    $phone = $data['phone'] ?? '';
-    $college = $data['college'] ?? '';
-    $department = $data['department'] ?? '';
-    $isGraduated = $data['isGraduated'] === 'yes' ? 1 : 0;
-    $graduationYear = $data['graduationYear'] ?? null;
-    $password = $data['password'] ?? '';
-
-    // Validate inputs
-    if (empty($name) || empty($email) || empty($phone) || empty($college) || empty($department) || empty($password)) {
-        die(json_encode(['success' => false, 'message' => 'All fields are required.']));
-    }
-
-    try {
-        // Insert the new user into the database
-        $stmt = $pdo->prepare("
-            INSERT INTO users (first_name, email, phone, college, department, is_graduated, graduated_year, password, is_admin)
-            VALUES (:name, :email, :phone, :college, :department, :is_graduated, :graduationYear, :password, 0)
-        ");
-        $stmt->execute([
-            'name' => $name,
-            'email' => $email,
-            'phone' => $phone,
-            'college' => $college,
-            'department' => $department,
-            'is_graduated' => $isGraduated,
-            'graduationYear' => $graduationYear,
-            'password' => $password
+    if ($result->num_rows > 0) {
+        // User found, set session data
+        $row = $result->fetch_assoc();
+        $_SESSION['user_id'] = $row['user_id'];
+        $_SESSION['first_name'] = $row['first_name'];
+        $_SESSION['last_name'] = $row['last_name'];
+        
+        // Respond with a success message and redirect URL
+        echo json_encode([
+            'success' => true,
+            'redirectUrl' => 'user-dashboard.php', // Redirect to the user dashboard
         ]);
+    } else {
+        // Invalid credentials
+        echo json_encode([
+            'success' => false,
+            'message' => 'Invalid email or password.',
+        ]);
+    }
+} elseif ($input['action'] === 'register') {
+    // Handle registration logic
+    $name = $input['data']['name'];
+    $email = $input['data']['email'];
+    $phone = $input['data']['phone'];
+    $college = $input['data']['college'];
+    $department = $input['data']['department'];
+    $isGraduated = $input['data']['isGraduated'];
+    $graduationYear = $input['data']['graduationYear'];
+    $password = $input['data']['password'];
 
-        die(json_encode(['success' => true]));
-    } catch (PDOException $e) {
-        die(json_encode(['success' => false, 'message' => 'Registration failed: ' . $e->getMessage()]));
+    // Check if the email already exists
+    $sql = "SELECT user_id FROM users WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Email already exists
+        echo json_encode([
+            'success' => false,
+            'message' => 'Email is already registered.',
+        ]);
+    } else {
+        // Insert new user into the database
+        $sql = "INSERT INTO users (name, email, phone, college, department, is_graduated, graduation_year, password) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssssss", $name, $email, $phone, $college, $department, $isGraduated, $graduationYear, $password);
+
+        if ($stmt->execute()) {
+            // Successful registration
+            echo json_encode([
+                'success' => true,
+                'message' => 'Registration successful!',
+            ]);
+        } else {
+            // Database error
+            echo json_encode([
+                'success' => false,
+                'message' => 'Registration failed. Please try again.',
+            ]);
+        }
     }
 } else {
-    die(json_encode(['success' => false, 'message' => 'Invalid action.']));
+    // Invalid action
+    echo json_encode([
+        'success' => false,
+        'message' => 'Invalid action.',
+    ]);
 }
+
+$conn->close();
 ?>
