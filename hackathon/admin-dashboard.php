@@ -109,8 +109,14 @@ $result = $conn->query($sql);
 
                         <!-- Right Section: Approve and Delete buttons -->
                         <div class="mt-auto flex justify-between space-x-4">
-                            <button onclick="approveProject()" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition w-full text-center">Approve</button>
-                            <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Declined</button>
+                            <form action='process-approval.php' method='POST'>
+                                <input type='hidden' name='project_id' value='<?= $project['project_id']; ?>'>
+                                <button onclick="approveProject()" value='approve' name='action' class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition w-full text-center">Approve</button>
+                            </form>
+                            <form action='process-approval.php' method='POST'>
+                                <input type='hidden' name='project_id' value='<?= $project['project_id']; ?>'>
+                                <button onclick="deleteProject()" value='decline' name='action' class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Declined</button>
+                            </form>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -151,7 +157,10 @@ $result = $conn->query($sql);
 
                         <!-- Right Section: Approve and Delete buttons -->
                         <div class="mt-auto flex justify-between space-x-4">
-                            <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Declined</button>
+                            <form action='process-approval.php' method='POST'>
+                                <input type='hidden' name='project_id' value='<?= $project['project_id']; ?>'>
+                                <button onclick="deleteProject()" value='decline' name='action' class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Declined</button>
+                            </form>
                         </div>
                     </div>
                 <?php endif; ?>
