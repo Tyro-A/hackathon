@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,6 +35,15 @@
         <a href="login.php">
           <i class="fas fa-user text-xl"></i>
         </a>
+        <?php
+        if (isset($_SESSION['user_id'])) : ?>
+        <a href="logout.php">
+          <i class="text-xl">logout</i>
+        </a>
+        <a href="dashboard-check.php">
+          <i class="text-xl">mydashboard</i>
+        </a>
+        <?php endif ?>
       </div>
     </div>
   </header>
@@ -172,11 +184,13 @@ JOIN category on (projects.cat_id=category.category_id)";
 
     <div class="flex justify-between items-center mb-4">
       <span>List of upcoming activities at the university</span>
-      <input class="border border-gray-300 px-2 py-1" placeholder="Search:" type="text" />
+      
     </div>
     <!-- Table Placeholder -->
     <div class="border border-gray-300 p-4">
-      <div class="projects"></div>
+      <div class="footer">
+        contact university info
+      </div>
     </div>
   </main>
 

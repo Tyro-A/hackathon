@@ -1,16 +1,11 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+session_start();
+if (!isset($_SESSION['user_id']) && !$_SESSION['is_admin']) {
+    header('Location: login.php');
+    exit();
 }
-
+// Database connection
+require 'connection.php';
 // Query to retrieve data
 $sql = "SELECT project_id, title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, approval,
                     members.name_1, members.name_2, members.name_3, members.name_4, 
