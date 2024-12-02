@@ -80,7 +80,8 @@
       <span class="ml-2">Projects</span>
     </div>
     
-
+<!-- Projects List -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
 <?php
 // الاتصال بقاعدة البيانات
 $servername = "localhost";
@@ -135,8 +136,7 @@ $result = $conn->query($sql);
 
 
     
-    <!-- Projects List -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+    
       
       <!-- Example Project Card -->
       <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
@@ -177,7 +177,7 @@ $result = $conn->query($sql);
 
 
       
-    </div>
+   
 
     <?php
                 }
@@ -189,7 +189,7 @@ $result = $conn->query($sql);
               ?>
 
 
-
+</div>
 
     <div class="flex justify-between items-center mb-4">
       <span>List of upcoming activities at the university</span>
