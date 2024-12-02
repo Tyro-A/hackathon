@@ -6,17 +6,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+require 'connection.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -195,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <!-- Adopting Authority Field -->
       <div>
         <label for="adoptingAuthority" class="block text-sm font-semibold">Adopting Authority:</label>
-        <input value="<?= $row['adoption_authority'] ?>" type="text" id="adoptingAuthority" name="adoptingAuthority" class="border px-4 py-2 w-full" required />
+        <input value="<?= $row['adoption_authority'] ?>" type="text" id="adoptingAuthority" name="adoptingAuthority" class="border px-4 py-2 w-full"/>
       </div>
 
       <div class="flex space-x-4">

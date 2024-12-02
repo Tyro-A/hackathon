@@ -1,20 +1,7 @@
 <?php
 // Start the session to handle login
 session_start();
-
-// Database connection
-$servername = "localhost";
-$db_username = "root";
-$db_password = "";
-$db_name = "project";
-
-// Create connection
-$conn = new mysqli($servername, $db_username, $db_password, $db_name);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'connection.php';
 
 // Get the raw POST data from the client
 $input = json_decode(file_get_contents('php://input'), true);

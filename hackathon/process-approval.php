@@ -1,15 +1,5 @@
 <?php
-// Include database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $project_id = $_POST['project_id'];

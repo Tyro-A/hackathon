@@ -137,16 +137,7 @@ session_start();
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
       <?php
       // الاتصال بقاعدة البيانات
-      $servername = "localhost";
-      $username = "root";
-      $password = "";
-      $dbname = "project";
-
-      $conn = new mysqli($servername, $username, $password, $dbname);
-
-      if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-      }
+      require 'connection.php';
 
       // استعلام لاسترداد البيانات
       $sql = "SELECT project_id, title_en,title_ar,supervisor,description,progress,adoption_authority,documintation,members.name_1,members.name_2,members.name_3,

@@ -5,20 +5,10 @@ if (!isset($_SESSION['user_id'])) {
   exit();
 }
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+require 'connection.php';
 
 $user_id = $_SESSION['user_id']; // Get the logged-in user's ID
-$sql = "SELECT project_id, title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, 
+$sql = "SELECT project_id, title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, approval, 
         members.name_1, members.name_2, members.name_3, members.name_4, 
         images.image_1, images.image_2, images.image_3, images.image_4, 
         users.first_name, users.last_name, category.name 
@@ -146,6 +136,7 @@ $result = $stmt->get_result();
           $Leader_f = $row['first_name'];
           $Leader_l = $row['last_name'];
           $category = $row['name'];
+          $approval = $row['approval'];
       ?>
           <!-- Example Project Card -->
           <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
@@ -175,6 +166,13 @@ $result = $stmt->get_result();
               <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
               <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
               <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+              <?php if ($approval === NULL) : ?>
+                <p class="text-sm mb-2">status: pindding </p>
+                <?php elseif($approval === '1') : ?>
+                <p class="text-sm mb-2">status: approved </p>
+              <?php else : ?>
+                <p class="text-sm mb-2">status: Declined </p>
+                <?php endif ;?>
             </div>
 
 
