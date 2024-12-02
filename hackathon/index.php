@@ -10,6 +10,9 @@ session_start();
   <title>University of Kerbala</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <!-- Add Tailwind & FontAwesome scripts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
   <style>
     .background-logo {
       background-image: url('Images/Uni-Logo.jpg');
@@ -21,8 +24,44 @@ session_start();
 </head>
 
 <body class="bg-white">
+<header class="bg-gray-800 text-white">
+  <div class="container mx-auto flex justify-between items-center py-2 px-4">
+    <div class="flex items-center space-x-4">
+      <a href="index.php">
+        <i class="fas fa-home text-xl"></i>
+      </a>
+    </div>
+    <div class="flex items-center space-x-4">
+      <i class="fas fa-envelope text-xl"></i>
+      <i class="fas fa-search text-xl"></i>
+
+      <!-- User Icon with Dropdown -->
+      <div class="relative">
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <button id="user-icon" class="flex items-center">
+            <i class="fas fa-user text-xl"></i>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-700 text-white rounded shadow-lg hidden z-10 transition-all duration-200 ease-in-out">
+            <a href="dashboard-check.php" class="block px-4 py-2 hover:bg-gray-600 focus:bg-gray-600 transition-colors duration-200 ease-in-out">Dashboard</a>
+            <a href="logout.php" class="block px-4 py-2 hover:bg-gray-600 focus:bg-gray-600 transition-colors duration-200 ease-in-out">Logout</a>
+          </div>
+        <?php else: ?>
+          <!-- Redirect to login page if not logged in -->
+          <a href="login.php">
+            <button id="login-icon" class="flex items-center">
+              <i class="fas fa-user text-xl"></i>
+            </button>
+          </a>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+</header>
+
   <!-- Header -->
-  <header class="bg-gray-800 text-white">
+  <!-- <header class="bg-gray-800 text-white">
     <div class="container mx-auto flex justify-between items-center py-2 px-4">
       <div class="flex items-center space-x-4">
         <a href="index.php">
@@ -37,16 +76,16 @@ session_start();
         </a>
         <?php
         if (isset($_SESSION['user_id'])) : ?>
-        <a href="logout.php">
-          <i class="text-xl">logout</i>
-        </a>
-        <a href="dashboard-check.php">
-          <i class="text-xl">mydashboard</i>
-        </a>
+          <a href="logout.php">
+            <i class="text-xl">logout</i>
+          </a>
+          <a href="dashboard-check.php">
+            <i class="text-xl">dashboard</i>
+          </a>
         <?php endif ?>
       </div>
     </div>
-  </header>
+  </header> -->
 
   <!-- Logo and Title -->
   <div class="container mx-auto text-center">
@@ -111,7 +150,7 @@ session_start();
 
       // استعلام لاسترداد البيانات
       $sql = "SELECT project_id, title_en,title_ar,supervisor,description,progress,adoption_authority,documintation,members.name_1,members.name_2,members.name_3,
-members.name_4,images.image_1,images.image_2,images.image_3,images.image_4,users.first_name,users.last_name,category.name FROM projects
+members.name_4,images.image_1,images.image_2,images.image_3,images.image_4,users.first_name,users.last_name,category.name, approval FROM projects
 JOIN members on(projects.members_id=members.members_id)
 JOIN images on (projects.images_id=images.images_id)
 JOIN users on (projects.user_id=users.user_id)
@@ -142,30 +181,39 @@ JOIN category on (projects.cat_id=category.category_id)";
           $Leader_f = $row['first_name'];
           $Leader_l = $row['last_name'];
           $category = $row['name'];
+          $approval = $row['approval'];
       ?>
-          <!-- Example Project Card -->
-          <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
-            <!-- Left Section: Images and Project Details -->
-            <div class="flex flex-wrap gap-4 mb-4">
-              <img src="<?php echo "$images_1" ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-              <img src="<?php echo "$images_2" ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-              <img src="<?php echo "$images_3" ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-              <img src="<?php echo "$images_4" ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
-            </div>
+          <?php if ($approval) : ?>
+            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
 
-            <!-- Project Information -->
-            <div class="flex-1">
-              <h3 class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
-              <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
-              <p class="text-sm mb-2">Catagory: <?php echo  $category ?></p>
-              <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
-              <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
-              <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
-              <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
-              <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
-            </div>
-          </div>
+              <div class="flex flex-wrap gap-4 mb-4">
+                <?php for ($i = 1; $i <= 4; $i++) : ?>
+                  <?php
+                  // Construct the variable name dynamically, e.g., image_1, image_2, etc.
+                  $imageVar = 'images_' . $i;
 
+                  // Check if the variable is set and not empty
+                  if (!empty($$imageVar)) : ?>
+                    <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                  <?php endif; ?>
+                <?php endfor; ?>
+
+              </div>
+
+
+              <!-- Project Information -->
+              <div class="flex-1">
+                <h3 class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
+                <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
+                <p class="text-sm mb-2">Catagory: <?php echo  $category ?></p>
+                <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
+                <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
+                <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
+                <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
+                <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+              </div>
+            </div>
+          <?php endif ?>
 
 
 
@@ -184,7 +232,7 @@ JOIN category on (projects.cat_id=category.category_id)";
 
     <div class="flex justify-between items-center mb-4">
       <span>List of upcoming activities at the university</span>
-      
+
     </div>
     <!-- Table Placeholder -->
     <div class="border border-gray-300 p-4">
@@ -194,7 +242,23 @@ JOIN category on (projects.cat_id=category.category_id)";
     </div>
   </main>
 
-  <script src="server/view.js"></script>
+  <script>
+    // Get the user icon button and dropdown
+    const userIcon = document.getElementById('user-icon');
+    const userDropdown = document.getElementById('user-dropdown');
+
+    // Toggle the dropdown menu when user clicks the user icon
+    userIcon.addEventListener('click', function() {
+      userDropdown.classList.toggle('hidden');
+    });
+
+    // Optionally, close the dropdown if the user clicks outside of it
+    window.addEventListener('click', function(event) {
+      if (!userIcon.contains(event.target) && !userDropdown.contains(event.target)) {
+        userDropdown.classList.add('hidden');
+      }
+    });
+  </script>
 </body>
 
 

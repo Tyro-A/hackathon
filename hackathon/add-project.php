@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->query($sql);
 
         $conn->commit();
-        echo "Data added successfully.";
+        header("Location: user-dashboard.php"); 
     } catch (Exception $e) {
         $conn->rollback();
         echo "Error: " . $e->getMessage();

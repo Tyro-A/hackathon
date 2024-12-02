@@ -59,24 +59,39 @@ $result = $stmt->get_result();
 
   <!-- Header -->
   <header class="bg-gray-800 text-white">
-    <div class="container mx-auto flex justify-between items-center py-2 px-4">
-      <div class="flex items-center space-x-4">
-        <a href="index.php">
-          <i class="fas fa-home text-xl"></i>
-        </a>
-      </div>
-      <div class="flex items-center space-x-4">
-        <i class="fas fa-envelope text-xl"></i>
-        <i class="fas fa-search text-xl"></i>
-        <a href="login.php">
-          <i class="fas fa-user text-xl"></i>
-        </a>
-        <a href="logout.php">
-          <i class="text-xl">logout</i>
-        </a>
+  <div class="container mx-auto flex justify-between items-center py-2 px-4">
+    <div class="flex items-center space-x-4">
+      <a href="index.php">
+        <i class="fas fa-home text-xl"></i>
+      </a>
+    </div>
+    <div class="flex items-center space-x-4">
+      <i class="fas fa-envelope text-xl"></i>
+      <i class="fas fa-search text-xl"></i>
+
+      <!-- User Icon with Dropdown -->
+      <div class="relative">
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <button id="user-icon" class="flex items-center">
+            <i class="fas fa-user text-xl"></i>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-700 text-white rounded shadow-lg hidden z-10 transition-all duration-200 ease-in-out">
+            <a href="logout.php" class="block px-4 py-2 hover:bg-gray-600 focus:bg-gray-600 transition-colors duration-200 ease-in-out">Logout</a>
+          </div>
+        <?php else: ?>
+          <!-- Redirect to login page if not logged in -->
+          <a href="login.php">
+            <button id="login-icon" class="flex items-center">
+              <i class="fas fa-user text-xl"></i>
+            </button>
+          </a>
+        <?php endif; ?>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
   <!-- Logo and Title -->
   <div class="container mx-auto text-center">
@@ -136,10 +151,16 @@ $result = $stmt->get_result();
           <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
             <!-- Left Section: Images and Project Details -->
             <div class="flex flex-wrap gap-4 mb-4">
-              <img src="<?php echo $images_1 ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-              <img src="<?php echo $images_2 ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-              <img src="<?php echo $images_3 ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-              <img src="<?php echo $images_4 ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+              <?php for ($i = 1; $i <= 4; $i++) : ?>
+                <?php
+                // Construct the variable name dynamically, e.g., image_1, image_2, etc.
+                $imageVar = 'images_' . $i;
+
+                // Check if the variable is set and not empty
+                if (!empty($$imageVar)) : ?>
+                  <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                <?php endif; ?>
+              <?php endfor; ?>
             </div>
 
             <!-- Project Information -->
@@ -186,7 +207,23 @@ $result = $stmt->get_result();
       </div>
     </div>
   </main>
+  <script>
+        // Get the user icon button and dropdown
+        const userIcon = document.getElementById('user-icon');
+    const userDropdown = document.getElementById('user-dropdown');
 
+    // Toggle the dropdown menu when user clicks the user icon
+    userIcon.addEventListener('click', function() {
+      userDropdown.classList.toggle('hidden');
+    });
+
+    // Optionally, close the dropdown if the user clicks outside of it
+    window.addEventListener('click', function(event) {
+      if (!userIcon.contains(event.target) && !userDropdown.contains(event.target)) {
+        userDropdown.classList.add('hidden');
+      }
+    });
+  </script>
 </body>
 
 </html>

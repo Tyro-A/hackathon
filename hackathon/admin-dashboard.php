@@ -38,19 +38,41 @@ $result = $conn->query($sql);
 <body class="bg-gray-200">
 
     <!-- Header (same as index page) -->
-    <header class="bg-gray-800 text-white py-4">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <div class="text-2xl font-bold"><a href="index.php">University of Kerbala</a></div>
-            <div class="flex items-center space-x-4">
-                <a href="index.php" class="text-white hover:text-gray-400">
-                    <i class="fas fa-home text-xl"></i>
-                </a>
-                <a href="login.php" class="text-white hover:text-gray-400">
-                    <i class="fas fa-user text-xl"></i>
-                </a>
-            </div>
-        </div>
-    </header>
+    <header class="bg-gray-800 text-white">
+  <div class="container mx-auto flex justify-between items-center py-2 px-4">
+    <div class="flex items-center space-x-4">
+      <a href="index.php">
+        <i class="fas fa-home text-xl"></i>
+      </a>
+    </div>
+    <div class="flex items-center space-x-4">
+      <i class="fas fa-envelope text-xl"></i>
+      <i class="fas fa-search text-xl"></i>
+
+      <!-- User Icon with Dropdown -->
+      <div class="relative">
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <button id="user-icon" class="flex items-center">
+            <i class="fas fa-user text-xl"></i>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-700 text-white rounded shadow-lg hidden z-10 transition-all duration-200 ease-in-out">
+            <a href="logout.php" class="block px-4 py-2 hover:bg-gray-600 focus:bg-gray-600 transition-colors duration-200 ease-in-out">Logout</a>
+          </div>
+        <?php else: ?>
+          <!-- Redirect to login page if not logged in -->
+          <a href="login.php">
+            <button id="login-icon" class="flex items-center">
+              <i class="fas fa-user text-xl"></i>
+            </button>
+          </a>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+</header>
+
     <!-- Button to switch between forms -->
     <div class="flex justify-center mt-4 space-x-4">
         <!-- Pending button (Blue) -->
@@ -77,15 +99,30 @@ $result = $conn->query($sql);
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
             <?php foreach ($result as $project) : ?>
+
+
                 <?php if ($project['approval'] === NULL) : ?>
+                    <?php
+                    $images_1 = $project['image_1'];
+                    $images_2 = $project['image_2'];
+                    $images_3 = $project['image_3'];
+                    $images_4 = $project['image_4'];
+                    ?>
                     <!-- Example Project Card -->
                     <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
                         <!-- Left Section: Images and Project Details -->
                         <div class="flex flex-wrap gap-4 mb-4">
-                            <img src="<?php echo $project['image_1'] ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $project['image_2'] ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $project['image_3'] ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $$project['image_4'] ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+                            <?php for ($i = 1; $i <= 4; $i++) : ?>
+                                <?php
+                                // Construct the variable name dynamically, e.g., image_1, image_2, etc.
+                                $imageVar = 'images_' . $i;
+
+                                // Check if the variable is set and not empty
+                                if (!empty($$imageVar)) : ?>
+                                    <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                                <?php endif; ?>
+                            <?php endfor; ?>
+
                         </div>
 
                         <div class="flex-1">
@@ -126,14 +163,26 @@ $result = $conn->query($sql);
 
             <?php foreach ($result as $project) : ?>
                 <?php if ($project['approval'] === "1") : ?>
+                    <?php
+                    $images_1 = $project['image_1'];
+                    $images_2 = $project['image_2'];
+                    $images_3 = $project['image_3'];
+                    $images_4 = $project['image_4'];
+                    ?>
                     <!-- Example Project Card -->
                     <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
                         <!-- Left Section: Images and Project Details -->
                         <div class="flex flex-wrap gap-4 mb-4">
-                            <img src="<?php echo $project['image_1'] ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $project['image_2'] ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $project['image_3'] ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $$project['image_4'] ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+                            <?php for ($i = 1; $i <= 4; $i++) : ?>
+                                <?php
+                                // Construct the variable name dynamically, e.g., image_1, image_2, etc.
+                                $imageVar = 'images_' . $i;
+
+                                // Check if the variable is set and not empty
+                                if (!empty($$imageVar)) : ?>
+                                    <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                                <?php endif; ?>
+                            <?php endfor; ?>
                         </div>
 
                         <div class="flex-1">
@@ -170,14 +219,26 @@ $result = $conn->query($sql);
 
             <?php foreach ($result as $project) : ?>
                 <?php if ($project['approval'] === "0") : ?>
+                    <?php
+                    $images_1 = $project['image_1'];
+                    $images_2 = $project['image_2'];
+                    $images_3 = $project['image_3'];
+                    $images_4 = $project['image_4'];
+                    ?>
                     <!-- Example Project Card -->
                     <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
                         <!-- Left Section: Images and Project Details -->
                         <div class="flex flex-wrap gap-4 mb-4">
-                            <img src="<?php echo $project['image_1'] ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $project['image_2'] ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $project['image_3'] ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-                            <img src="<?php echo $$project['image_4'] ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+                            <?php for ($i = 1; $i <= 4; $i++) : ?>
+                                <?php
+                                // Construct the variable name dynamically, e.g., image_1, image_2, etc.
+                                $imageVar = 'images_' . $i;
+
+                                // Check if the variable is set and not empty
+                                if (!empty($$imageVar)) : ?>
+                                    <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                                <?php endif; ?>
+                            <?php endfor; ?>
                         </div>
 
                         <div class="flex-1">
@@ -250,6 +311,21 @@ $result = $conn->query($sql);
         window.onload = function() {
             toggleForm('pending');
         }
+                // Get the user icon button and dropdown
+                const userIcon = document.getElementById('user-icon');
+    const userDropdown = document.getElementById('user-dropdown');
+
+    // Toggle the dropdown menu when user clicks the user icon
+    userIcon.addEventListener('click', function() {
+      userDropdown.classList.toggle('hidden');
+    });
+
+    // Optionally, close the dropdown if the user clicks outside of it
+    window.addEventListener('click', function(event) {
+      if (!userIcon.contains(event.target) && !userDropdown.contains(event.target)) {
+        userDropdown.classList.add('hidden');
+      }
+    });
     </script>
 
 </body>
