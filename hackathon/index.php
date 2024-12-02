@@ -80,6 +80,61 @@
       <span class="ml-2">Projects</span>
     </div>
     
+
+<?php
+// الاتصال بقاعدة البيانات
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "project";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// استعلام لاسترداد البيانات
+$sql = "SELECT title_en,title_ar,supervisor,description,progress,adoption_authority,documintation,members.name_1,members.name_2,members.name_3,
+members.name_4,images.image_1,images.image_2,images.image_3,images.image_4,users.first_name,users.last_name,category.name FROM projects
+JOIN members on(projects.members_id=members.members_id)
+JOIN images on (projects.images_id=images.images_id)
+JOIN users on (projects.user_id=users.user_id)
+JOIN category on (projects.cat_id=category.category_id)";
+
+$result = $conn->query($sql);
+
+
+              if ($result->num_rows > 0) {
+
+                while ($row = $result->fetch_assoc()) {
+                  $title_en = $row['title_en'];
+                  $title_ar = $row['title_ar'];
+                  $supervisor = $row['supervisor'];
+                  $Description = $row['description'];
+                  $Progress = $row['progress'];
+                  $Adoption_Authority = $row['adoption_authority'];
+                  $Documentation = $row['documintation'];
+                  $members_1 = $row['name_1'];
+                  $members_2 = $row['name_2'];
+                  $members_3 = $row['name_3'];
+                  $members_4 = $row['name_4'];
+                 $images_1 = $row['image_1'];
+                 $images_2 = $row['image_2'];
+                 $images_3 = $row['image_3'];
+                 $images_4 = $row['image_4'];
+                  $Leader_f = $row['first_name'];
+                  $Leader_l = $row['last_name'];
+                  $category = $row['name'];
+                 
+                  
+                  
+    
+
+              ?>
+
+
+    
     <!-- Projects List -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
       
@@ -95,19 +150,46 @@
 
         <!-- Project Information -->
         <div class="flex-1">
-          <h3 class="text-lg font-semibold mb-2">Project Title (English)</h3>
-          <p class="text-sm text-gray-500 mb-2">Title in Arabic: عنوان المشروع</p>
-          <p class="text-sm mb-2">Supervisor: John Doe</p>
-          <p class="text-sm mb-2">Leader: Jane Doe</p>
-          <p class="text-sm mb-2">Members: Member 1, Member 2</p>
-          <p class="text-sm mb-2">Description: This is a description of the project.</p>
-          <p class="text-sm mb-2">Progress: 70%</p>
-          <p class="text-sm mb-2">Adoption Authority: Authority Name</p>
-          <p class="text-sm mb-4">Documentation: <a href="#" class="text-blue-500">View Document</a></p>
+          <h3  class="text-lg font-semibold mb-2"><?php echo $title_en; ?>  </p></h3>
+          <p  class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?>  </p></p>
+          <p  class="text-sm mb-2"><?php echo  $category ?></p>
+          <p  class="text-sm mb-2"><?php echo $supervisor; ?>  </p></p>
+          <p  class="text-sm mb-2"><?php echo $Description; ?></p>
+          <p  class="text-sm mb-2"><?php echo $Progress ?></p>
+          <p  class="text-sm mb-2"><?php echo $Adoption_Authority ?></p>
+          <p  class="text-sm mb-2"><?php echo $Documentation ?></p>
+          <p  class="text-sm mb-2"><?php echo $members_1 ?></p>
+          <p  class="text-sm mb-2"><?php echo $members_2 ?></p>
+          <p  class="text-sm mb-2"><?php echo $members_3 ?></p>
+          <p  class="text-sm mb-2"><?php echo $members_4?></p>
+          <p  class="text-sm mb-2"><?php echo $images_1 ?></p>
+          <p  class="text-sm mb-2"><?php echo $images_2 ?></p>
+          <p  class="text-sm mb-2"><?php echo $images_3 ?></p>
+          <p  class="text-sm mb-2"><?php echo $images_4 ?></p>
+          <p  class=""><?php echo $Leader_f ," ", $Leader_l?></p>  
+         
+     
+
+          
+
         </div>
       </div>
 
+
+      
     </div>
+
+    <?php
+                }
+              } else {
+                echo "لايوجد   ";
+              }
+
+              $conn->close();
+              ?>
+
+
+
 
     <div class="flex justify-between items-center mb-4">
       <span>List of upcoming activities at the university</span>
@@ -121,4 +203,7 @@
 
   <script src="server/view.js"></script>
 </body>
+
+
+
 </html>
