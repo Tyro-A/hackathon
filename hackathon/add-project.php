@@ -110,23 +110,23 @@
       </div>
 
       <div>
-        <label for="members_1" class="block text-sm font-semibold">Members (comma separated):</label>
+        <label for="members_1" class="block text-sm font-semibold">Members:</label>
         <input type="text" id="name_1" name="name_1" class="border px-4 py-2 w-full" />
       </div>
 
       <div>
-        <label for="members_2" class="block text-sm font-semibold">Members (comma separated):</label>
+        <label for="members_2" class="block text-sm font-semibold">Members:</label>
         <input type="text" id="name_2" name="name_2" class="border px-4 py-2 w-full" />
       </div>
 
       <div>
-        <label for="members_3" class="block text-sm font-semibold">Members (comma separated):</label>
+        <label for="members_3" class="block text-sm font-semibold">Members:</label>
         <input type="text" id="name_3" name="name_3" class="border px-4 py-2 w-full" />
 
       </div>
 
       <div>
-        <label for="members_4" class="block text-sm font-semibold">Members (comma separated):</label>
+        <label for="members_4" class="block text-sm font-semibold">Members:</label>
         <input type="text" id="name_4" name="name_4" class="border px-4 py-2 w-full" />
       </div>
 
