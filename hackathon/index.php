@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -15,20 +16,21 @@
     }
   </style>
 </head>
+
 <body class="bg-white">
   <!-- Header -->
   <header class="bg-gray-800 text-white">
     <div class="container mx-auto flex justify-between items-center py-2 px-4">
       <div class="flex items-center space-x-4">
         <a href="index.php">
-            <i class="fas fa-home text-xl"></i>
+          <i class="fas fa-home text-xl"></i>
         </a>
       </div>
       <div class="flex items-center space-x-4">
         <i class="fas fa-envelope text-xl"></i>
         <i class="fas fa-search text-xl"></i>
-        <a href="login.html">
-            <i class="fas fa-user text-xl"></i>
+        <a href="login.php">
+          <i class="fas fa-user text-xl"></i>
         </a>
       </div>
     </div>
@@ -79,94 +81,94 @@
       </select>
       <span class="ml-2">Projects</span>
     </div>
-    
-<!-- Projects List -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
-<?php
-// الاتصال بقاعدة البيانات
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+    <!-- Projects List -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+      <?php
+      // الاتصال بقاعدة البيانات
+      $servername = "localhost";
+      $username = "root";
+      $password = "";
+      $dbname = "project";
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+      $conn = new mysqli($servername, $username, $password, $dbname);
 
-// استعلام لاسترداد البيانات
-$sql = "SELECT project_id, title_en,title_ar,supervisor,description,progress,adoption_authority,documintation,members.name_1,members.name_2,members.name_3,
+      if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+
+      // استعلام لاسترداد البيانات
+      $sql = "SELECT project_id, title_en,title_ar,supervisor,description,progress,adoption_authority,documintation,members.name_1,members.name_2,members.name_3,
 members.name_4,images.image_1,images.image_2,images.image_3,images.image_4,users.first_name,users.last_name,category.name FROM projects
 JOIN members on(projects.members_id=members.members_id)
 JOIN images on (projects.images_id=images.images_id)
 JOIN users on (projects.user_id=users.user_id)
 JOIN category on (projects.cat_id=category.category_id)";
 
-$result = $conn->query($sql);
+      $result = $conn->query($sql);
 
 
-              if ($result->num_rows > 0) {
+      if ($result->num_rows > 0) {
 
-                while ($row = $result->fetch_assoc()) {
-                  $project_id = $row['project_id'];
-                  $title_en = $row['title_en'];
-                  $title_ar = $row['title_ar'];
-                  $supervisor = $row['supervisor'];
-                  $Description = $row['description'];
-                  $Progress = $row['progress'];
-                  $Adoption_Authority = $row['adoption_authority'];
-                  $Documentation = $row['documintation'];
-                  $members_1 = $row['name_1'];
-                  $members_2 = $row['name_2'];
-                  $members_3 = $row['name_3'];
-                  $members_4 = $row['name_4'];
-                 $images_1 = $row['image_1'];
-                 $images_2 = $row['image_2'];
-                 $images_3 = $row['image_3'];
-                 $images_4 = $row['image_4'];
-                  $Leader_f = $row['first_name'];
-                  $Leader_l = $row['last_name'];
-                  $category = $row['name'];
-              ?>
-      <!-- Example Project Card -->
-      <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
-        <!-- Left Section: Images and Project Details -->
-        <div class="flex flex-wrap gap-4 mb-4">
-          <img src="uplouds/<?php echo "$project_id" ?>/<?php echo "$images_1" ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-          <img src="uplouds/<?php echo "$project_id" ?>/<?php echo "$images_1" ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-          <img src="uplouds/<?php echo "$project_id" ?>/<?php echo "$images_1" ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-          <img src="uplouds/<?php echo "$project_id" ?>/<?php echo "$images_1" ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
-        </div>
+        while ($row = $result->fetch_assoc()) {
+          $project_id = $row['project_id'];
+          $title_en = $row['title_en'];
+          $title_ar = $row['title_ar'];
+          $supervisor = $row['supervisor'];
+          $Description = $row['description'];
+          $Progress = $row['progress'];
+          $Adoption_Authority = $row['adoption_authority'];
+          $Documentation = $row['documintation'];
+          $members_1 = $row['name_1'];
+          $members_2 = $row['name_2'];
+          $members_3 = $row['name_3'];
+          $members_4 = $row['name_4'];
+          $images_1 = $row['image_1'];
+          $images_2 = $row['image_2'];
+          $images_3 = $row['image_3'];
+          $images_4 = $row['image_4'];
+          $Leader_f = $row['first_name'];
+          $Leader_l = $row['last_name'];
+          $category = $row['name'];
+      ?>
+          <!-- Example Project Card -->
+          <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
+            <!-- Left Section: Images and Project Details -->
+            <div class="flex flex-wrap gap-4 mb-4">
+              <img src="<?php echo "$images_1" ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
+              <img src="<?php echo "$images_2" ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
+              <img src="<?php echo "$images_3" ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
+              <img src="<?php echo "$images_4" ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+            </div>
 
-        <!-- Project Information -->
-        <div class="flex-1">
-          <h3  class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
-          <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
-          <p class="text-sm mb-2">Catagory: <?php echo  $category ?></p>
-          <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>  
-          <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
-          <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
-          <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
-          <p  class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
-        </div>
-      </div>
-
-
-      
-   
-
-    <?php
-                }
-              } else {
-                echo "لايوجد   ";
-              }
-
-              $conn->close();
-              ?>
+            <!-- Project Information -->
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
+              <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
+              <p class="text-sm mb-2">Catagory: <?php echo  $category ?></p>
+              <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
+              <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
+              <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
+              <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
+              <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+            </div>
+          </div>
 
 
-</div>
+
+
+
+      <?php
+        }
+      } else {
+        echo "لايوجد   ";
+      }
+
+      $conn->close();
+      ?>
+
+
+    </div>
 
     <div class="flex justify-between items-center mb-4">
       <span>List of upcoming activities at the university</span>

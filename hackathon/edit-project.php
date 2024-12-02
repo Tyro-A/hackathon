@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-  header('Location: login.html'); // Redirect to login page if not logged in
+  header('Location: login.php'); // Redirect to login page if not logged in
   exit();
 }
 
@@ -21,9 +21,7 @@ if ($conn->connect_error) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $project_id = intval($_POST['project_id']);
-}
-
-$sql = "SELECT project_id, title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, members.members_id ,
+  $sql = "SELECT project_id, title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, members.members_id ,
         members.name_1, members.name_2, members.name_3, members.name_4, 
         images.image_1, images.image_2, images.image_3, images.image_4, 
         users.first_name, users.last_name, category.name 
@@ -34,8 +32,25 @@ $sql = "SELECT project_id, title_en, title_ar, supervisor, description, progress
         JOIN category ON projects.cat_id = category.category_id
         WHERE project_id = $project_id";
 
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
+  $result = $conn->query($sql);
+  $row = $result->fetch_assoc();
+} else { {
+    $project_id = intval($_GET['project_id']);
+    $sql = "SELECT project_id, title_en, title_ar, supervisor, description, progress, adoption_authority, documintation, members.members_id ,
+          members.name_1, members.name_2, members.name_3, members.name_4, 
+          images.image_1, images.image_2, images.image_3, images.image_4, 
+          users.first_name, users.last_name, category.name 
+          FROM projects
+          JOIN members ON projects.members_id = members.members_id
+          JOIN images ON projects.images_id = images.images_id
+          JOIN users ON projects.user_id = users.user_id
+          JOIN category ON projects.cat_id = category.category_id
+          WHERE project_id = $project_id";
+
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+  }
+}
 
 ?>
 <!DOCTYPE html>
@@ -63,14 +78,14 @@ $row = $result->fetch_assoc();
     <div class="container mx-auto flex justify-between items-center py-2 px-4">
       <div class="flex items-center space-x-4">
         <a href="index.php">
-            <i class="fas fa-home text-xl"></i>
+          <i class="fas fa-home text-xl"></i>
         </a>
       </div>
       <div class="flex items-center space-x-4">
         <i class="fas fa-envelope text-xl"></i>
         <i class="fas fa-search text-xl"></i>
-        <a href="login.html">
-            <i class="fas fa-user text-xl"></i>
+        <a href="login.php">
+          <i class="fas fa-user text-xl"></i>
         </a>
       </div>
     </div>
@@ -109,7 +124,7 @@ $row = $result->fetch_assoc();
     <div id="formMessage" class="hidden mb-4 text-center"></div>
 
     <!-- Project Form -->
-    <form id="projectForm" class="space-y-4"  action="update-project.php" method="POST">
+    <form id="projectForm" class="space-y-4" action="update-project.php" method="POST" enctype="multipart/form-data">
       <div class="flex space-x-4">
         <div class="w-1/2">
           <label for="title_arabic" class="block text-sm font-semibold">Title (Arabic):</label>
@@ -186,29 +201,29 @@ $row = $result->fetch_assoc();
       <div class="flex space-x-4">
         <div class="w-1/2">
           <label for="image1" class="block text-sm font-semibold">Image 1:</label>
-          <input value="<?= $row['image_1'] ?>" type="file" id="image1" name="image1" class="border px-4 py-2 w-full" />
+          <input src="<?= $row['image_1'] ?>" type="file" id="image1" name="image1" class="border px-4 py-2 w-full" />
         </div>
 
         <div class="w-1/2">
           <label for="image2" class="block text-sm font-semibold">Image 2:</label>
-          <input value="<?= $row['image_2'] ?>" type="file" id="image2" name="image2" class="border px-4 py-2 w-full" />
+          <input src="<?= $row['image_2'] ?>" type="file" id="image2" name="image2" class="border px-4 py-2 w-full" />
         </div>
       </div>
 
       <div class="flex space-x-4">
         <div class="w-1/2">
           <label for="image3" class="block text-sm font-semibold">Image 3:</label>
-          <input value="<?= $row['image_3'] ?>" type="file" id="image3" name="image3" class="border px-4 py-2 w-full" />
+          <input src="<?= $row['image_3'] ?>" type="file" id="image3" name="image3" class="border px-4 py-2 w-full" />
         </div>
 
         <div class="w-1/2">
           <label for="image4" class="block text-sm font-semibold">Image 4:</label>
-          <input value="<?= $row['image_4'] ?>" type="file" id="image4" name="image4" class="border px-4 py-2 w-full" />
+          <input src="<?= $row['image_4'] ?>" type="file" id="image4" name="image4" class="border px-4 py-2 w-full" />
         </div>
       </div>
 
       <!-- Hidden Field -->
-      <input type="hidden" value="<?= $row['project_id']?>" name="project_id"/>
+      <input type="hidden" value="<?= $row['project_id'] ?>" name="project_id" />
 
       <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded">
         Submit
@@ -223,4 +238,5 @@ $row = $result->fetch_assoc();
     </div>
   </footer>
 </body>
+
 </html>

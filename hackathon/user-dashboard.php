@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-  header('Location: login.html'); // Redirect to login page if not logged in
+  header('Location: login.php'); // Redirect to login page if not logged in
   exit();
 }
 
@@ -68,7 +68,7 @@ $result = $stmt->get_result();
       <div class="flex items-center space-x-4">
         <i class="fas fa-envelope text-xl"></i>
         <i class="fas fa-search text-xl"></i>
-        <a href="login.html">
+        <a href="login.php">
           <i class="fas fa-user text-xl"></i>
         </a>
         <a href="logout.php">

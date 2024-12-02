@@ -50,7 +50,7 @@ $result = $conn->query($sql);
                 <a href="index.php" class="text-white hover:text-gray-400">
                     <i class="fas fa-home text-xl"></i>
                 </a>
-                <a href="login.html" class="text-white hover:text-gray-400">
+                <a href="login.php" class="text-white hover:text-gray-400">
                     <i class="fas fa-user text-xl"></i>
                 </a>
             </div>
