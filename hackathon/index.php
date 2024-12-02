@@ -20,7 +20,7 @@
   <header class="bg-gray-800 text-white">
     <div class="container mx-auto flex justify-between items-center py-2 px-4">
       <div class="flex items-center space-x-4">
-        <a href="index.html">
+        <a href="index.php">
             <i class="fas fa-home text-xl"></i>
         </a>
       </div>
@@ -142,36 +142,24 @@ $result = $conn->query($sql);
       <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
         <!-- Left Section: Images and Project Details -->
         <div class="flex flex-wrap gap-4 mb-4">
-          <img src="image1.jpg" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
-          <img src="image2.jpg" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
-          <img src="image3.jpg" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
-          <img src="image4.jpg" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
+          <img src="<?php echo $images_1 ?>" alt="Project Image 1" class="w-32 h-32 object-cover rounded">
+          <img src="<?php echo $images_2 ?>" alt="Project Image 2" class="w-32 h-32 object-cover rounded">
+          <img src="<?php echo $images_3 ?>" alt="Project Image 3" class="w-32 h-32 object-cover rounded">
+          <img src="<?php echo $images_4 ?>" alt="Project Image 4" class="w-32 h-32 object-cover rounded">
         </div>
 
         <!-- Project Information -->
         <div class="flex-1">
-          <h3  class="text-lg font-semibold mb-2"><?php echo $title_en; ?>  </p></h3>
-          <p  class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?>  </p></p>
-          <p  class="text-sm mb-2"><?php echo  $category ?></p>
-          <p  class="text-sm mb-2"><?php echo $supervisor; ?>  </p></p>
-          <p  class="text-sm mb-2"><?php echo $Description; ?></p>
-          <p  class="text-sm mb-2"><?php echo $Progress ?></p>
-          <p  class="text-sm mb-2"><?php echo $Adoption_Authority ?></p>
-          <p  class="text-sm mb-2"><?php echo $Documentation ?></p>
-          <p  class="text-sm mb-2"><?php echo $members_1 ?></p>
-          <p  class="text-sm mb-2"><?php echo $members_2 ?></p>
-          <p  class="text-sm mb-2"><?php echo $members_3 ?></p>
-          <p  class="text-sm mb-2"><?php echo $members_4?></p>
-          <p  class="text-sm mb-2"><?php echo $images_1 ?></p>
-          <p  class="text-sm mb-2"><?php echo $images_2 ?></p>
-          <p  class="text-sm mb-2"><?php echo $images_3 ?></p>
-          <p  class="text-sm mb-2"><?php echo $images_4 ?></p>
-          <p  class=""><?php echo $Leader_f ," ", $Leader_l?></p>  
-         
-     
-
-          
-
+          <h3  class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
+          <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
+          <p class="text-sm mb-2">Catagory: <?php echo  $category ?></p>
+          <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
+          <p class="text-sm mb-2">Leader: <?php echo $Leader_f ," ", $Leader_l?></p>
+          <p  class="text-sm mb-2">Members: <?php echo $members_1 ?>, <?php echo $members_2 ?>, <?php echo $members_3 ?>, <?php echo $members_4?></p>
+          <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
+          <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
+          <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
+          <p  class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
         </div>
       </div>
 
