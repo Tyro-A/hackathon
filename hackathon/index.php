@@ -129,11 +129,6 @@ $result = $conn->query($sql);
                   $Leader_l = $row['last_name'];
                   $category = $row['name'];
               ?>
-
-
-    
-    
-      
       <!-- Example Project Card -->
       <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300 flex flex-col">
         <!-- Left Section: Images and Project Details -->
