@@ -50,6 +50,7 @@
       <label for="loginPassword" class="block text-sm font-medium">Password:</label>
       <input type="password" id="loginPassword" name="loginPassword" class="block w-full px-4 py-2 mb-4 border"
         required>
+      <p id="EpasswordError" class="text-red-500 text-sm hidden mb-4">The password or Email is not crrect</p>
 
       <button type="submit"
         class="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Login</button>
@@ -94,7 +95,7 @@
       <label for="confirmPassword" class="block text-sm font-medium">Confirm Password:</label>
       <input type="password" id="confirmPassword" name="confirmPassword" class="block w-full px-4 py-2 mb-2 border"
         required>
-      <p id="passwordError" class="text-red-500 text-sm hidden">Passwords do not match!</p>
+      <p id="passwordError" class="text-red-500 text-sm hidden mb-4">Passwords do not match!</p>
 
       <button type="submit"
         class="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Register</button>
@@ -105,10 +106,10 @@
     function validatePasswords() {
       const password = document.getElementById('registerPassword').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
-      const errorText = document.getElementById('passwordError');
+      const regErrorText = document.getElementById('passwordError');
 
       if (password !== confirmPassword) {
-        errorText.classList.remove('hidden'); // Show error message
+        regErrorText.classList.remove('hidden'); // Show error message
         return false;
       } else {
         errorText.classList.add('hidden'); // Hide error message
@@ -135,7 +136,7 @@
     // Handle Login Form Submission
     function handleLoginSubmit(event) {
       event.preventDefault();
-
+      const logErrorText = document.getElementById('EpasswordError');
       const loginData = {
         username: document.getElementById('loginUsername').value,
         password: document.getElementById('loginPassword').value,
@@ -156,7 +157,7 @@
             alert(result.message || 'Login failed.');
           }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(logErrorText.classList.remove('hidden'));
     }
 
     // Handle Register Form Submission
@@ -192,8 +193,6 @@
             }
           })
           .catch(error => console.error('Error:', error));
-      } else {
-        alert('Passwords do not match.');
       }
     }
   </script>
