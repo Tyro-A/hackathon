@@ -228,7 +228,9 @@ JOIN category on (projects.cat_id=category.category_id)";
     <!-- Table Placeholder -->
     <div class="border border-gray-300 p-4">
       <div class="footer">
-        contact university info
+      <p class="text-sm text-gray-500 mb-2">contact with college: IT@ouk.org</p>
+      <p class="text-sm text-gray-500 mb-2">phone number: +964777777777</p>
+      <p class="text-sm text-gray-900 mb-2 b-5">Copyright © 2024 UB All Rights Reserved</p>
       </div>
     </div>
   </main>
