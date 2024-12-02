@@ -129,7 +129,7 @@
                         <!-- Right Section: Approve and Delete buttons -->
                         <div class="mt-auto flex justify-between space-x-4">
                             <button onclick="approveProject()" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition w-full text-center">Approve</button>
-                            <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Delete</button>
+                            <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Declined</button>
                         </div>
                     </div>
             <?php
@@ -222,8 +222,7 @@
 
                         <!-- Right Section: Approve and Delete buttons -->
                         <div class="mt-auto flex justify-between space-x-4">
-                            <button onclick="approveProject()" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition w-full text-center">Approve</button>
-                            <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Delete</button>
+                            <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Declined</button>
                         </div>
                     </div>
             <?php
@@ -317,7 +316,6 @@
                         <!-- Right Section: Approve and Delete buttons -->
                         <div class="mt-auto flex justify-between space-x-4">
                             <button onclick="approveProject()" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition w-full text-center">Approve</button>
-                            <button onclick="deleteProject()" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition w-full text-center">Delete</button>
                         </div>
                     </div>
             <?php
