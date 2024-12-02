@@ -68,6 +68,9 @@ $result = $stmt->get_result();
         <a href="login.html">
             <i class="fas fa-user text-xl"></i>
         </a>
+        <a href="logout.php">
+            <i class="text-xl">logout</i>
+        </a>
       </div>
     </div>
   </header>

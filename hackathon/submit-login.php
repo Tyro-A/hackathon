@@ -25,7 +25,7 @@ if ($input['action'] === 'login') {
     $password = $input['data']['password'];
 
     // Validate user credentials from the database
-    $sql = "SELECT user_id, first_name, last_name FROM users WHERE email = ? AND password = ?";
+    $sql = "SELECT user_id, first_name, last_name, is_admin FROM users WHERE email = ? AND password = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $username, $password);
     $stmt->execute();
@@ -37,19 +37,27 @@ if ($input['action'] === 'login') {
         $_SESSION['user_id'] = $row['user_id'];
         $_SESSION['first_name'] = $row['first_name'];
         $_SESSION['last_name'] = $row['last_name'];
-        
-        // Respond with a success message and redirect URL
-        echo json_encode([
-            'success' => true,
-            'redirectUrl' => 'user-dashboard.php', // Redirect to the user dashboard
-        ]);
-    } else {
-        // Invalid credentials
-        echo json_encode([
-            'success' => false,
-            'message' => 'Invalid email or password.',
-        ]);
+        $_SESSION['is_admin'] = $row['is_admin'];
+        if ($_SESSION['is_admin'] == 1) {
+            echo json_encode([
+                'success' => true,
+                'redirectUrl' => 'admin-dashboard.php', // Redirect to the user dashboard
+            ]);
+        } else if ($_SESSION['is_admin'] == 0) {
+            echo json_encode([
+                'success' => true,
+                'redirectUrl' => 'user-dashboard.php', // Redirect to the user dashboard
+            ]);
+        } else {
+            // Invalid credentials
+            echo json_encode([
+                'success' => false,
+                'message' => 'Invalid email or password.',
+            ]);
+        }
     }
+    // Respond with a success message and redirect URL
+
 } elseif ($input['action'] === 'register') {
     // Handle registration logic
     $name = $input['data']['name'];
@@ -104,4 +112,3 @@ if ($input['action'] === 'login') {
 }
 
 $conn->close();
-?>
