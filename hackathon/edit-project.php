@@ -142,10 +142,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input value="<?= $row['supervisor'] ?>" type="text" id="supervisor" name="supervisor" class="border px-4 py-2 w-full" required />
       </div>
 
-      <div>
-        <label for="leader" class="block text-sm font-semibold">Leader Name:</label>
-        <input value="<?= $row['first_name'] . ' ' . $row['last_name'] ?>" type="text" id="leader" name="leader" class="border px-4 py-2 w-full" required />
-      </div>
 
       <div hidden>
         <label for="members_1" class="block text-sm font-semibold">Member 1:</label>
