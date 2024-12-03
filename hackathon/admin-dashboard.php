@@ -131,6 +131,8 @@ $result = $conn->query($sql);
                                 // Check if the variable is set and not empty
                                 if (!empty($$imageVar)) : ?>
                                     <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                                   <?php else : ?>
+                                    <div class="w-32 h-32 object-cover rounded"></div>
                                   <?php endif; ?>
                                 <?php endfor; ?>
 
@@ -191,7 +193,9 @@ $result = $conn->query($sql);
 
                                 // Check if the variable is set and not empty
                                 if (!empty($$imageVar)) : ?>
-                                    <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                                    <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="project-image w-32 h-32 object-cover rounded">
+                                    <?php else : ?>
+                                        <div class="w-32 h-32 object-cover rounded"></div>
                                 <?php endif; ?>
                             <?php endfor; ?>
                         </div>
@@ -247,7 +251,9 @@ $result = $conn->query($sql);
 
                                 // Check if the variable is set and not empty
                                 if (!empty($$imageVar)) : ?>
-                                    <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                                    <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="project-image w-32 h-32 object-cover rounded">
+                                    <?php else : ?>
+                                        <div class="w-32 h-32 object-cover rounded"></div> 
                                 <?php endif; ?>
                             <?php endfor; ?>
                         </div>
