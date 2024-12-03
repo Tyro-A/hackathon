@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2024 at 08:37 AM
+-- Generation Time: Dec 03, 2024 at 09:04 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -59,12 +59,12 @@ CREATE TABLE `images` (
 
 INSERT INTO `images` (`images_id`, `image_1`, `image_2`, `image_3`, `image_4`) VALUES
 (26, 'uploads/project-1.png', 'uploads/project1b.png', 'uploads/project1c.png', 'uploads/project1d.png'),
-(28, 'uploads/project2.webp', '', '', ''),
-(29, 'uploads/project3.webp', 'uploads/unnamed.jpg', '', ''),
-(30, 'uploads/project4.png', '', '', ''),
+(28, 'uploads/project2.webp', 'uploads/none.jpg', 'uploads/none.jpg', 'uploads/none.jpg'),
+(29, 'uploads/project3.webp', 'uploads/unnamed.jpg', 'uploads/none.jpg', 'uploads/none.jpg'),
+(30, 'uploads/project4.png', 'uploads/none.jpg', 'uploads/none.jpg', 'uploads/none.jpg'),
 (41, 'uploads/1.png', 'uploads/2.png', 'uploads/3.png', 'uploads/4.png'),
 (42, 'uploads/5355078977317889492.jpg', 'uploads/5354960818472610026.jpg', 'uploads/5355078977317889496.jpg', 'uploads/5355078977317889499.jpg'),
-(43, 'uploads/14ff128a-d898-4dd6-9227-97ff5221e33e.jpeg', 'uploads/556fbc25-03e8-4fa7-938d-2cd2cf35bb80.jpeg', 'uploads/96f3540f-0551-451c-a31f-864dabbbd9f9.jpeg', '');
+(43, 'uploads/14ff128a-d898-4dd6-9227-97ff5221e33e.jpeg', 'uploads/556fbc25-03e8-4fa7-938d-2cd2cf35bb80.jpeg', 'uploads/96f3540f-0551-451c-a31f-864dabbbd9f9.jpeg', 'uploads/none.jpg');
 
 -- --------------------------------------------------------
 
