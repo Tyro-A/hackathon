@@ -132,9 +132,9 @@ $result = $conn->query($sql);
                                 if (!empty($$imageVar)) : ?>
                                     <a href="project.php?project_id=<?php echo $project_id; ?>">
                                       <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                                      </a>
                                       <?php else : ?>
                                       <div class=" w-15 h-32 object-cover rounded"></div>
-                                    </a>
                                   <?php endif; ?>
                                 <?php endfor; ?>
 
