@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mkdir($upload_dir, 0777, true);
     }
 
-    $image_1 = $image_2 = $image_3 = $image_4 = '';
+    $image_1 = $image_2 = $image_3 = $image_4 = 'uploads/none.jpg';
 
     try {
         if (isset($_FILES['image_1']) && $_FILES['image_1']['error'] == UPLOAD_ERR_OK) {
@@ -66,7 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('$name_1', '$name_2', '$name_3', '$name_4')";
         $conn->query($sql);
         $members_id = $conn->insert_id;
+        
 
+        
         // Insert into `images`
         $sql = "INSERT INTO images (image_1, image_2, image_3, image_4) 
                 VALUES ('$image_1', '$image_2', '$image_3', '$image_4')";
