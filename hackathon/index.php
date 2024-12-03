@@ -25,7 +25,7 @@ session_start();
   }
 
   .project-image:hover {
-    transform: scale(2.5); /* Scale up the image slightly */
+    transform: scale(1.1); /* Scale up the image slightly */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Optional: Add shadow for emphasis */
   }
   </style>
@@ -164,19 +164,19 @@ JOIN category on (projects.cat_id=category.category_id)";
 
                   // Check if the variable is set and not empty
                   if (!empty($$imageVar)) : ?>
-                    <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
-                  <?php else : ?>
-                    <div class=" w-32 h-32 object-cover rounded"></div>
-                    
+                    <a href="project.php?project_id=<?php echo $project_id; ?>">
+                      <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                      <?php else : ?>
+                      <div class=" w-15 h-32 object-cover rounded"></div>
+                    </a>
                   <?php endif; ?>
                 <?php endfor; ?>
 
               </div>
 
-
               <!-- Project Information -->
               <div class="flex-1">
-                <h3 class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3>
+                <a href="project.php?project_id=<?php echo $project_id; ?>"><h3 class="text-lg font-semibold mb-2"><?php echo $title_en; ?></h3></a>
                 <p class="text-sm text-gray-500 mb-2"><?php echo $title_ar; ?></p>
                 <p class="text-sm mb-2">Catagory: <?php echo  $category ?></p>
                 <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
