@@ -99,30 +99,12 @@ if (isset($_SESSION['user_id'])) {
       <input type="password" id="registerPassword" name="registerPassword" class="block w-full px-4 py-2 mb-2 border"
         required>
 
-      <label for="confirmPassword" class="block text-sm font-medium">Confirm Password:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" class="block w-full px-4 py-2 mb-2 border"
-        required>
-      <p id="passwordError" class="text-red-500 text-sm hidden mb-4">Passwords do not match!</p>
-
       <button type="submit"
         class="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Register</button>
     </form>
   </div>
 
   <script>
-    function validatePasswords() {
-      const password = document.getElementById('registerPassword').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-      const regErrorText = document.getElementById('passwordError');
-
-      if (password !== confirmPassword) {
-        regErrorText.classList.remove('hidden'); // Show error message
-        return false;
-      } else {
-        errorText.classList.add('hidden'); // Hide error message
-        return true;
-      }
-    }
     function toggleForm(formType) {
       const loginForm = document.getElementById('loginForm');
       const registerForm = document.getElementById('registerForm');

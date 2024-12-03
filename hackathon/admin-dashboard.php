@@ -32,6 +32,17 @@ $result = $conn->query($sql);
         .hidden {
             display: none;
         }
+
+        .project-image {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(2.5);
+            /* Scale up the image slightly */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            /* Optional: Add shadow for emphasis */
+        }
     </style>
 </head>
 
@@ -39,39 +50,39 @@ $result = $conn->query($sql);
 
     <!-- Header (same as index page) -->
     <header class="bg-gray-800 text-white">
-  <div class="container mx-auto flex justify-between items-center py-2 px-4">
-    <div class="flex items-center space-x-4">
-      <a href="index.php">
-        <i class="fas fa-home text-xl"></i>
-      </a>
-    </div>
-    <div class="flex items-center space-x-4">
-      <i class="fas fa-envelope text-xl"></i>
-      <i class="fas fa-search text-xl"></i>
+        <div class="container mx-auto flex justify-between items-center py-2 px-4">
+            <div class="flex items-center space-x-4">
+                <a href="index.php">
+                    <i class="fas fa-home text-xl"></i>
+                </a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <i class="fas fa-envelope text-xl"></i>
+                <i class="fas fa-search text-xl"></i>
 
-      <!-- User Icon with Dropdown -->
-      <div class="relative">
-        <?php if (isset($_SESSION['user_id'])): ?>
-          <button id="user-icon" class="flex items-center">
-            <i class="fas fa-user text-xl"></i>
-          </button>
+                <!-- User Icon with Dropdown -->
+                <div class="relative">
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <button id="user-icon" class="flex items-center">
+                            <i class="fas fa-user text-xl"></i>
+                        </button>
 
-          <!-- Dropdown Menu -->
-          <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-700 text-white rounded shadow-lg hidden z-10 transition-all duration-200 ease-in-out">
-            <a href="logout.php" class="block px-4 py-2 hover:bg-gray-600 focus:bg-gray-600 transition-colors duration-200 ease-in-out">Logout</a>
-          </div>
-        <?php else: ?>
-          <!-- Redirect to login page if not logged in -->
-          <a href="login.php">
-            <button id="login-icon" class="flex items-center">
-              <i class="fas fa-user text-xl"></i>
-            </button>
-          </a>
-        <?php endif; ?>
-      </div>
-    </div>
-  </div>
-</header>
+                        <!-- Dropdown Menu -->
+                        <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-700 text-white rounded shadow-lg hidden z-10 transition-all duration-200 ease-in-out">
+                            <a href="logout.php" class="block px-4 py-2 hover:bg-gray-600 focus:bg-gray-600 transition-colors duration-200 ease-in-out">Logout</a>
+                        </div>
+                    <?php else: ?>
+                        <!-- Redirect to login page if not logged in -->
+                        <a href="login.php">
+                            <button id="login-icon" class="flex items-center">
+                                <i class="fas fa-user text-xl"></i>
+                            </button>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </header>
 
     <!-- Button to switch between forms -->
     <div class="flex justify-center mt-4 space-x-4">
@@ -119,9 +130,9 @@ $result = $conn->query($sql);
 
                                 // Check if the variable is set and not empty
                                 if (!empty($$imageVar)) : ?>
-                                    <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
-                                <?php endif; ?>
-                            <?php endfor; ?>
+                                    <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                                  <?php endif; ?>
+                                <?php endfor; ?>
 
                         </div>
 
@@ -311,21 +322,21 @@ $result = $conn->query($sql);
         window.onload = function() {
             toggleForm('pending');
         }
-                // Get the user icon button and dropdown
-                const userIcon = document.getElementById('user-icon');
-    const userDropdown = document.getElementById('user-dropdown');
+        // Get the user icon button and dropdown
+        const userIcon = document.getElementById('user-icon');
+        const userDropdown = document.getElementById('user-dropdown');
 
-    // Toggle the dropdown menu when user clicks the user icon
-    userIcon.addEventListener('click', function() {
-      userDropdown.classList.toggle('hidden');
-    });
+        // Toggle the dropdown menu when user clicks the user icon
+        userIcon.addEventListener('click', function() {
+            userDropdown.classList.toggle('hidden');
+        });
 
-    // Optionally, close the dropdown if the user clicks outside of it
-    window.addEventListener('click', function(event) {
-      if (!userIcon.contains(event.target) && !userDropdown.contains(event.target)) {
-        userDropdown.classList.add('hidden');
-      }
-    });
+        // Optionally, close the dropdown if the user clicks outside of it
+        window.addEventListener('click', function(event) {
+            if (!userIcon.contains(event.target) && !userDropdown.contains(event.target)) {
+                userDropdown.classList.add('hidden');
+            }
+        });
     </script>
 
 </body>

@@ -42,6 +42,14 @@ $result = $stmt->get_result();
       background-size: contain;
       background-position: center;
     }
+    .project-image {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .project-image:hover {
+    transform: scale(2.5); /* Scale up the image slightly */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Optional: Add shadow for emphasis */
+  }
   </style>
 </head>
 
@@ -102,8 +110,6 @@ $result = $stmt->get_result();
         <li><a class="hover:text-red-500" href="#">STAFF</a></li>
         <li><a class="hover:text-red-500 bg-red-700 px-2 py-1" href="#">Projects</a></li>
         <li><a class="hover:text-red-500" href="#">SCHOLARSHIPS</a></li>
-        <li><a class="hover:text-red-500" href="#">HEALTH SERVICES</a></li>
-        <li><a class="hover:text-red-500" href="#">VR TOUR</a></li>
       </ul>
     </div>
   </nav>
@@ -149,7 +155,7 @@ $result = $stmt->get_result();
 
                 // Check if the variable is set and not empty
                 if (!empty($$imageVar)) : ?>
-                  <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                  <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
                 <?php endif; ?>
               <?php endfor; ?>
             </div>
