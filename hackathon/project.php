@@ -98,7 +98,7 @@ if (isset($_GET['project_id'])) {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <?php for ($i = 1; $i <= 4; $i++) :
                 $image = $project["image_$i"];
-                if (!empty($image)) : ?>
+                if (!empty($image) && $image !== "uploads/none.jpg")  : ?>
                     <a href="<?php echo htmlspecialchars($image); ?>" class="image-link">
                         <img src="<?php echo htmlspecialchars($image); ?>" alt="Project Image <?php echo $i; ?>" class="w-full h-40 object-cover rounded-lg shadow">
                     </a>
