@@ -20,6 +20,14 @@ session_start();
       background-size: contain;
       background-position: center;
     }
+    .project-image {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .project-image:hover {
+    transform: scale(3); /* Scale up the image slightly */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Optional: Add shadow for emphasis */
+  }
   </style>
 </head>
 
@@ -59,33 +67,6 @@ session_start();
       </div>
     </div>
   </header>
-
-  <!-- Header -->
-  <!-- <header class="bg-gray-800 text-white">
-    <div class="container mx-auto flex justify-between items-center py-2 px-4">
-      <div class="flex items-center space-x-4">
-        <a href="index.php">
-          <i class="fas fa-home text-xl"></i>
-        </a>
-      </div>
-      <div class="flex items-center space-x-4">
-        <i class="fas fa-envelope text-xl"></i>
-        <i class="fas fa-search text-xl"></i>
-        <a href="login.php">
-          <i class="fas fa-user text-xl"></i>
-        </a>
-        <?php
-        if (isset($_SESSION['user_id'])) : ?>
-          <a href="logout.php">
-            <i class="text-xl">logout</i>
-          </a>
-          <a href="dashboard-check.php">
-            <i class="text-xl">dashboard</i>
-          </a>
-        <?php endif ?>
-      </div>
-    </div>
-  </header> -->
 
   <!-- Logo and Title -->
   <div class="container mx-auto text-center">
@@ -185,7 +166,7 @@ JOIN category on (projects.cat_id=category.category_id)";
 
                   // Check if the variable is set and not empty
                   if (!empty($$imageVar)) : ?>
-                    <img src="<?php echo $$imageVar; ?>" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                    <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
                   <?php endif; ?>
                 <?php endfor; ?>
 
