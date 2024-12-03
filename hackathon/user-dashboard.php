@@ -161,11 +161,16 @@ $result = $stmt->get_result();
               <p class="text-sm mb-2">Catagory: <?php echo  $category ?></p>
               <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
               <p class="text-sm mb-2">Leader: <?php echo $Leader_f, " ", $Leader_l ?></p>
+              
               <p class="text-sm mb-2">Members: <?php echo $members_1 ?>, <?php echo $members_2 ?>, <?php echo $members_3 ?>, <?php echo $members_4 ?></p>
               <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
               <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
-              <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
-              <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+              <?php if ($Adoption_Authority == ' ') : ?>
+                  <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
+                <?php endif ?>
+                <?php if (isset($Documentation)) : ?>
+                  <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+                <?php endif ?>
               <?php if ($approval === NULL) : ?>
                 <p class="text-sm mb-2">status: pindding </p>
                 <?php elseif($approval === '1') : ?>
