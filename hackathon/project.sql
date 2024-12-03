@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2024 at 07:48 PM
+-- Generation Time: Dec 03, 2024 at 03:49 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,10 +37,7 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`category_id`, `name`) VALUES
-(1, 'Category 1'),
-(2, 'Category 2'),
-(3, 'Category 3'),
-(4, 'Category 4');
+(12, 'Development');
 
 -- --------------------------------------------------------
 
@@ -61,10 +58,10 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`images_id`, `image_1`, `image_2`, `image_3`, `image_4`) VALUES
-(1, 'image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg'),
-(2, 'image5.jpg', 'image6.jpg', 'image7.jpg', 'image8.jpg'),
-(3, 'image9.jpg', 'image10.jpg', 'image11.jpg', 'image12.jpg'),
-(4, 'image13.jpg', 'image14.jpg', 'image15.jpg', 'image16.jpg');
+(26, 'uploads/project-1.png', 'uploads/project1b.png', 'uploads/project1c.png', 'uploads/project1d.png'),
+(28, 'uploads/project2.webp', '', '', ''),
+(29, 'uploads/project3.webp', '', '', ''),
+(30, 'uploads/project4.png', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -85,10 +82,10 @@ CREATE TABLE `members` (
 --
 
 INSERT INTO `members` (`members_id`, `name_1`, `name_2`, `name_3`, `name_4`) VALUES
-(1, 'Member 1', 'Member 2', 'Member 3', 'Member 4'),
-(2, 'Member 5', 'Member 6', 'Member 7', 'Member 8'),
-(3, 'Member 9', 'Member 10', 'Member 11', 'Member 12'),
-(4, 'Member 13', 'Member 14', 'Member 15', 'Member 16');
+(24, '', '', '', ''),
+(26, '', '', '', ''),
+(27, '', '', '', ''),
+(28, 'someone', 'someone', 'someone', 'someone');
 
 -- --------------------------------------------------------
 
@@ -117,10 +114,10 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`project_id`, `title_ar`, `title_en`, `supervisor`, `description`, `progress`, `adoption_authority`, `documintation`, `approval`, `members_id`, `images_id`, `user_id`, `cat_id`) VALUES
-(1, 'عنوان المشروع 1', 'Project Title 1', 'المشرف 1', 'وصف المشروع 1', 50, 'جهة التبني 1', 'توثيق المشروع 1', 1, 1, 1, 1, 1),
-(2, 'عنوان المشروع 2', 'Project Title 2', 'المشرف 2', 'وصف المشروع 2', 75, 'جهة التبني 2', 'توثيق المشروع 2', 0, 2, 2, 2, 2),
-(3, 'عنوان المشروع 3', 'Project Title 3', 'المشرف 3', 'وصف المشروع 3', 30, 'جهة التبني 3', 'توثيق المشروع 3', 1, 3, 3, 3, 3),
-(4, 'عنوان المشروع 4', 'Project Title 4', 'المشرف 4', 'وصف المشروع 4', 90, 'جهة التبني 4', 'توثيق المشروع 4', 0, 4, 4, 4, 4);
+(22, 'اداره مشاريع', 'project management ', 'Dr.Zaid ', 'to make the project management easy with this full responsive web application ', 100, '', NULL, 1, 24, 26, 10, 12),
+(24, 'استطلاع', 'survey form', 'Dr.Saif', 'take your survey in just few second with web responsive design', 100, '', NULL, 1, 26, 28, 11, 12),
+(25, 'المكتبة الإلكترونية', 'e-liberary', 'Dr.Mohammed', 'sell your book online with ', 100, '', NULL, 1, 27, 29, 12, 12),
+(26, 'الطقس', 'weather ', 'someone', 'something about weather ', 40, '', NULL, 0, 28, 30, 13, 12);
 
 -- --------------------------------------------------------
 
@@ -147,10 +144,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `college`, `department`, `is_graduated`, `graduated_year`, `password`, `is_admin`) VALUES
-(1, 'John', 'Doe', 'john.doe@example.com', '123456789', 'College A', 'Department X', 0, '2023-05-15', 'password1', NULL),
-(2, 'Jane', 'Smith', 'jane.smith@example.com', '987654321', 'College B', 'Department Y', 1, '2022-12-20', 'password2', NULL),
-(3, 'Alice', 'Johnson', 'alice.j@example.com', '456789123', 'College C', 'Department Z', 0, '2024-01-10', 'password3', NULL),
-(4, 'Bob', 'Brown', 'bob.brown@example.com', '369258147', 'College D', 'Department W', 1, '2021-08-05', 'password4', NULL);
+(1, 'admin', NULL, 'admin@mail.ouk', '1', 'CS & IT', 'IT', 0, '0000-00-00', '1234', 1),
+(10, 'ahmed', 'shaker', 'tyro@gmail.com', '07721391051', 'CS & IT', 'IT', 0, '0000-00-00', '1234', NULL),
+(11, 'Ali', 'Sami', 'zicko@gmail.com', '2', 'CS & IT', 'IT', 0, '0000-00-00', '1234', NULL),
+(12, 'Mohammed', 'Ali', 'Mohammed@gmail.com', '3', 'CS & IT', 'IT', 0, '0000-00-00', '1234', NULL),
+(13, 'some', 'one', 'someone@gmail.com', '5', 'CS & IT', 'IT', 0, '0000-00-00', '1234', NULL),
+(14, 'ali', '', 'ali@gmail.com', '6', 'CS & IT', 'IT', 0, '0000-00-00', '1234', NULL);
 
 --
 -- Indexes for dumped tables
@@ -188,7 +187,8 @@ ALTER TABLE `projects`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `email` (`email`) USING HASH;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -198,31 +198,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-  MODIFY `members_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `members_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
