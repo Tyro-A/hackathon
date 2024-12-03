@@ -167,6 +167,9 @@ JOIN category on (projects.cat_id=category.category_id)";
                   // Check if the variable is set and not empty
                   if (!empty($$imageVar)) : ?>
                     <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                  <?php else : ?>
+                    <div class=" w-32 h-32 object-cover rounded"></div>
+                    
                   <?php endif; ?>
                 <?php endfor; ?>
 
@@ -181,7 +184,7 @@ JOIN category on (projects.cat_id=category.category_id)";
                 <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
                 <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
                 <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
-                <?php if ($Adoption_Authority == '') : ?>
+                <?php if ($Adoption_Authority == ' ') : ?>
                   <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
                 <?php endif ?>
 
