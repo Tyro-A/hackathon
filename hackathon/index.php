@@ -32,41 +32,41 @@ session_start();
 </head>
 
 <body class="bg-white">
-<header class="bg-gray-800 text-white">
-  <div class="container mx-auto flex justify-between items-center py-2 px-4">
-    <div class="flex items-center space-x-4">
-      <a href="index.php">
-        <i class="fas fa-home text-xl"></i>
-      </a>
-    </div>
-    <div class="flex items-center space-x-4">
-      <i class="fas fa-envelope text-xl"></i>
-      <i class="fas fa-search text-xl"></i>
+  <header class="bg-gray-800 text-white">
+    <div class="container mx-auto flex justify-between items-center py-2 px-4">
+      <div class="flex items-center space-x-4">
+        <a href="index.php">
+          <i class="fas fa-home text-xl"></i>
+        </a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <i class="fas fa-envelope text-xl"></i>
+        <i class="fas fa-search text-xl"></i>
 
-      <!-- User Icon with Dropdown -->
-      <div class="relative">
-        <?php if (isset($_SESSION['user_id'])): ?>
-          <button id="user-icon" class="flex items-center">
-            <i class="fas fa-user text-xl"></i>
-          </button>
-
-          <!-- Dropdown Menu -->
-          <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-700 text-white rounded shadow-lg hidden z-10 transition-all duration-200 ease-in-out">
-            <a href="dashboard-check.php" class="block px-4 py-2 hover:bg-gray-600 focus:bg-gray-600 transition-colors duration-200 ease-in-out">Dashboard</a>
-            <a href="logout.php" class="block px-4 py-2 hover:bg-gray-600 focus:bg-gray-600 transition-colors duration-200 ease-in-out">Logout</a>
-          </div>
-        <?php else: ?>
-          <!-- Redirect to login page if not logged in -->
-          <a href="login.php">
-            <button id="login-icon" class="flex items-center">
+        <!-- User Icon with Dropdown -->
+        <div class="relative">
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <button id="user-icon" class="flex items-center">
               <i class="fas fa-user text-xl"></i>
             </button>
-          </a>
-        <?php endif; ?>
+
+            <!-- Dropdown Menu -->
+            <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-gray-700 text-white rounded shadow-lg hidden z-10 transition-all duration-200 ease-in-out">
+              <a href="dashboard-check.php" class="block px-4 py-2 hover:bg-gray-600 focus:bg-gray-600 transition-colors duration-200 ease-in-out">Dashboard</a>
+              <a href="logout.php" class="block px-4 py-2 hover:bg-gray-600 focus:bg-gray-600 transition-colors duration-200 ease-in-out">Logout</a>
+            </div>
+          <?php else: ?>
+            <!-- Redirect to login page if not logged in -->
+            <a href="login.php">
+              <button id="login-icon" class="flex items-center">
+                <i class="fas fa-user text-xl"></i>
+              </button>
+            </a>
+          <?php endif; ?>
+        </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
   <!-- Logo and Title -->
   <div class="container mx-auto text-center">
@@ -165,6 +165,9 @@ JOIN category on (projects.cat_id=category.category_id)";
                   // Check if the variable is set and not empty
                   if (!empty($$imageVar)) : ?>
                     <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                  <?php else : ?>
+                    <div class=" w-32 h-32 object-cover rounded"></div>
+                    
                   <?php endif; ?>
                 <?php endfor; ?>
 
@@ -179,8 +182,13 @@ JOIN category on (projects.cat_id=category.category_id)";
                 <p class="text-sm mb-2">Supervisor: <?php echo $supervisor; ?></p>
                 <p class="text-sm mb-2">Progress: <?php echo $Progress ?>%</p>
                 <p class="text-sm mb-2">Discription: <?php echo $Description; ?></p>
-                <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
-                <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+                <?php if ($Adoption_Authority == ' ') : ?>
+                  <p class="text-sm mb-2">Adoption Authority: <?php echo $Adoption_Authority ?></p>
+                <?php endif ?>
+
+                <?php if (isset($Documentation)) : ?>
+                  <p class="text-sm mb-2">View Documentation: <?php echo $Documentation ?></p>
+                <?php endif ?>
               </div>
             </div>
           <?php endif ?>
@@ -207,9 +215,9 @@ JOIN category on (projects.cat_id=category.category_id)";
     <!-- Table Placeholder -->
     <div class="border border-gray-300 p-4">
       <div class="footer">
-      <p class="text-sm text-gray-500 mb-2">contact with college: IT@ouk.org</p>
-      <p class="text-sm text-gray-500 mb-2">phone number: +964777777777</p>
-      <p class="text-sm text-gray-900 mb-2 b-5">Copyright © 2024 UB All Rights Reserved</p>
+        <p class="text-sm text-gray-500 mb-2">contact with college: IT@ouk.org</p>
+        <p class="text-sm text-gray-500 mb-2">phone number: +964777777777</p>
+        <p class="text-sm text-gray-900 mb-2 b-5">Copyright © 2024 UB All Rights Reserved</p>
       </div>
     </div>
   </main>
