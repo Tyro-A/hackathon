@@ -25,7 +25,7 @@ session_start();
   }
 
   .project-image:hover {
-    transform: scale(2.5); /* Scale up the image slightly */
+    transform: scale(1.1); /* Scale up the image slightly */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Optional: Add shadow for emphasis */
   }
   </style>

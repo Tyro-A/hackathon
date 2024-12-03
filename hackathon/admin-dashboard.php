@@ -38,7 +38,7 @@ $result = $conn->query($sql);
         }
 
         .project-image:hover {
-            transform: scale(2.5);
+            transform: scale(1.1);
             /* Scale up the image slightly */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             /* Optional: Add shadow for emphasis */
@@ -130,9 +130,11 @@ $result = $conn->query($sql);
 
                                 // Check if the variable is set and not empty
                                 if (!empty($$imageVar)) : ?>
-                                    <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
-                                   <?php else : ?>
-                                    <div class="w-32 h-32 object-cover rounded"></div>
+                                    <a href="project.php?project_id=<?php echo $project_id; ?>">
+                                      <img src="<?php echo $$imageVar; ?>" class="project-image w-32 h-32 object-cover rounded" alt="Project Image <?php echo $i; ?>" class="w-32 h-32 object-cover rounded">
+                                      <?php else : ?>
+                                      <div class=" w-15 h-32 object-cover rounded"></div>
+                                    </a>
                                   <?php endif; ?>
                                 <?php endfor; ?>
 
